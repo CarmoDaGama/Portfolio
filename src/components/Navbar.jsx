@@ -3,12 +3,12 @@ import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 
 const navLinks = [
-  { key: 'about', href: '#about' },
-  { key: 'skills', href: '#skills' },
-  { key: 'experience', href: '#experience' },
-  { key: 'education', href: '#education' },
-  { key: 'projects', href: '#projects' },
-  { key: 'contact', href: '#contact' },
+  { key: 'about', href: '#about', order: '01.' },
+  { key: 'skills', href: '#skills', order: '02.' },
+  { key: 'experience', href: '#experience', order: '03.' },
+  { key: 'education', href: '#education', order: '04.' },
+  { key: 'projects', href: '#projects', order: '05.' },
+  { key: 'contact', href: '#contact', order: '06.' },
 ];
 
 export default function Navbar() {
@@ -20,15 +20,18 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
 
+  const homeLabel = language === 'pt' ? 'Inicio' : 'Home';
+  const resumeLabel = language === 'pt' ? 'CV' : 'Resume';
+
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 10);
 
-      const sections = navLinks.map((l) => l.href.slice(1));
+      const sections = ['hero', ...navLinks.map((l) => l.href.slice(1))];
       let current = '';
       for (const id of sections) {
         const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 100) {
+        if (el && window.scrollY >= el.offsetTop - 120) {
           current = id;
         }
       }
@@ -54,72 +57,88 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'dark:bg-gray-900/95 dark:shadow-lg dark:shadow-black/20 bg-white/95 shadow-lg shadow-gray-200/20 dark:backdrop-blur-md backdrop-blur-md' 
-          : 'bg-transparent'
+      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? 'backdrop-blur-md' : ''
       }`}
+      style={
+        scrolled
+          ? {
+              backgroundColor: 'color-mix(in srgb, var(--color-bg) 84%, transparent)',
+              borderBottom: '1px solid var(--color-line)',
+            }
+          : undefined
+      }
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+      <div className="section-shell">
+        <div className="flex h-20 items-center justify-between">
           <a
-            href="#"
-            className="flex items-center gap-3 group"
+            href="#hero"
+            className="group flex items-center gap-3"
             onClick={(e) => handleLinkClick(e, '#hero')}
           >
-            <span className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm group-hover:bg-blue-500 transition-colors">
-              CG
-            </span>
-            <span className="dark:text-white text-gray-900 font-semibold text-lg hidden sm:block">
-              Carmo Da Gama
+            <span className="font-mono text-lg tracking-[0.18em] text-[var(--color-accent)]">CG.</span>
+            <span className="hidden text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition-colors group-hover:text-[var(--color-accent)] sm:block">
+              Full-Stack
             </span>
           </a>
 
-          {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                    activeSection === link.href.slice(1)
-                      ? 'dark:text-blue-400 dark:bg-blue-500/10 text-blue-600 bg-blue-100'
-                      : 'dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/5 text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                  }`}
-                >
-                  {t[link.key]}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className="hidden items-center gap-1 lg:flex">
+            <a
+              href="#hero"
+              onClick={(e) => handleLinkClick(e, '#hero')}
+              className={`rounded px-3 py-2 text-xs font-mono transition-colors ${
+                activeSection === 'hero' || activeSection === ''
+                  ? 'text-[var(--color-accent)]'
+                  : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
+              }`}
+            >
+              {homeLabel}
+            </a>
 
-          <div className="flex items-center gap-3">
-            {/* Theme toggle */}
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
+                className={`rounded px-3 py-2 text-xs font-mono transition-colors ${
+                  activeSection === link.href.slice(1)
+                    ? 'text-[var(--color-accent)]'
+                    : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
+                }`}
+              >
+                <span className="mr-1.5 text-[var(--color-accent)]">{link.order}</span>
+                {t[link.key]}
+              </a>
+            ))}
+            <a href="#contact" onClick={(e) => handleLinkClick(e, '#contact')} className="outline-button ml-2 py-2">
+              {resumeLabel}
+            </a>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+              className="rounded border border-[var(--color-line)] p-2 text-[var(--color-muted)] transition-colors hover:text-[var(--color-accent)]"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm5.657-9.193a1 1 0 00-1.414 0l-.707.707A1 1 0 005.05 6.464l.707-.707a1 1 0 001.414-1.414zM5 11a1 1 0 100-2H4a1 1 0 100 2h1z" clipRule="evenodd" />
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3c-.04.26-.06.53-.06.8a9 9 0 0 0 9 8.99c.27 0 .54-.02.85-.06Z" />
                 </svg>
               ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <circle cx="12" cy="12" r="4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.5M12 18.5V21M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M3 12h2.5M18.5 12H21M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77" />
                 </svg>
               )}
             </button>
 
-            {/* Language toggle - desktop */}
-            <div className="hidden md:flex items-center gap-1 rounded-lg dark:border-gray-700 border-gray-300 border p-1">
+            <div className="hidden items-center rounded border border-[var(--color-line)] p-1 md:flex">
               <button
                 className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
-                  language === 'en' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'dark:text-gray-300 dark:hover:text-white text-gray-600 hover:text-gray-900'
+                  language === 'en'
+                    ? 'bg-[var(--color-accent)] text-white'
+                    : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
                 onClick={() => handleLanguageChange('en')}
                 aria-label={`${t.toggleLanguage}: English`}
@@ -128,9 +147,9 @@ export default function Navbar() {
               </button>
               <button
                 className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
-                  language === 'pt' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'dark:text-gray-300 dark:hover:text-white text-gray-600 hover:text-gray-900'
+                  language === 'pt'
+                    ? 'bg-[var(--color-accent)] text-white'
+                    : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
                 onClick={() => handleLanguageChange('pt')}
                 aria-label={`${t.toggleLanguage}: Portugues`}
@@ -140,91 +159,100 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile hamburger */}
           <button
-            className="md:hidden flex flex-col gap-1.5 p-2 dark:text-gray-300 dark:hover:text-white text-gray-600 hover:text-gray-900"
+            className="flex flex-col gap-1.5 p-2 text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)] lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
           >
             <span
-              className={`block w-6 h-0.5 dark:bg-gray-300 bg-gray-600 transition-all duration-300 ${
+              className={`block h-0.5 w-6 bg-current transition-all duration-300 ${
                 isOpen ? 'rotate-45 translate-y-2' : ''
               }`}
             />
             <span
-              className={`block w-6 h-0.5 dark:bg-gray-300 bg-gray-600 transition-all duration-300 ${
+              className={`block h-0.5 w-6 bg-current transition-all duration-300 ${
                 isOpen ? 'opacity-0' : ''
               }`}
             />
             <span
-              className={`block w-6 h-0.5 dark:bg-gray-300 bg-gray-600 transition-all duration-300 ${
+              className={`block h-0.5 w-6 bg-current transition-all duration-300 ${
                 isOpen ? '-rotate-45 -translate-y-2' : ''
               }`}
             />
           </button>
         </div>
 
-        {/* Mobile menu */}
         <div
           id="mobile-menu"
-          className={`md:hidden transition-all duration-300 overflow-hidden dark:bg-gray-900/95 bg-white/95 ${
-            isOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+          className={`overflow-hidden transition-all duration-300 lg:hidden ${
+            isOpen ? 'max-h-[28rem] opacity-100' : 'max-h-0 opacity-0'
           }`}
+          style={{ borderTop: isOpen ? '1px solid var(--color-line)' : '0 solid transparent' }}
         >
-          <div className="px-4 pt-3 pb-2 dark:border-gray-800 border-gray-200 border-t flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm5.657-9.193a1 1 0 00-1.414 0l-.707.707A1 1 0 005.05 6.464l.707-.707a1 1 0 001.414-1.414zM5 11a1 1 0 100-2H4a1 1 0 100 2h1z" clipRule="evenodd" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                </svg>
-              )}
-            </button>
-            <button
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
-                language === 'en' ? 'bg-blue-600 text-white' : 'dark:text-gray-300 dark:hover:text-white text-gray-600 hover:text-gray-900'
+          <div className="space-y-1 py-3">
+            <a
+              href="#hero"
+              onClick={(e) => handleLinkClick(e, '#hero')}
+              className={`block rounded px-4 py-2 text-sm font-mono ${
+                activeSection === 'hero' || activeSection === ''
+                  ? 'text-[var(--color-accent)]'
+                  : 'text-[var(--color-muted)]'
               }`}
-              onClick={() => handleLanguageChange('en')}
-              aria-label={`${t.toggleLanguage}: English`}
             >
-              EN
-            </button>
-            <button
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
-                language === 'pt' ? 'bg-blue-600 text-white' : 'dark:text-gray-300 dark:hover:text-white text-gray-600 hover:text-gray-900'
-              }`}
-              onClick={() => handleLanguageChange('pt')}
-              aria-label={`${t.toggleLanguage}: Portugues`}
-            >
-              PT
-            </button>
-          </div>
-          <ul className="py-2 space-y-1 dark:border-gray-800 border-gray-200 border-t">
+              {homeLabel}
+            </a>
+
             {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={(e) => handleLinkClick(e, link.href)}
-                  className={`block px-4 py-2.5 rounded-md text-sm font-medium transition-colors ${
-                    activeSection === link.href.slice(1)
-                      ? 'dark:text-blue-400 dark:bg-blue-500/10 text-blue-600 bg-blue-100'
-                      : 'dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/5 text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                  }`}
-                >
-                  {t[link.key]}
-                </a>
-              </li>
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
+                className={`block rounded px-4 py-2 text-sm font-mono ${
+                  activeSection === link.href.slice(1)
+                    ? 'text-[var(--color-accent)]'
+                    : 'text-[var(--color-muted)]'
+                }`}
+              >
+                <span className="mr-2 text-[var(--color-accent)]">{link.order}</span>
+                {t[link.key]}
+              </a>
             ))}
-          </ul>
+
+            <a
+              href="#contact"
+              onClick={(e) => handleLinkClick(e, '#contact')}
+              className="block rounded px-4 py-2 text-sm font-mono text-[var(--color-accent)]"
+            >
+              {resumeLabel}
+            </a>
+
+            <div className="flex items-center gap-2 px-4 pt-3">
+            <button
+                className={`rounded px-3 py-1 text-xs font-semibold transition-colors ${
+                  language === 'en'
+                    ? 'bg-[var(--color-accent)] text-white'
+                    : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
+                }`}
+                onClick={() => handleLanguageChange('en')}
+                aria-label={`${t.toggleLanguage}: English`}
+              >
+                EN
+              </button>
+              <button
+                className={`rounded px-3 py-1 text-xs font-semibold transition-colors ${
+                  language === 'pt'
+                    ? 'bg-[var(--color-accent)] text-white'
+                    : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
+                }`}
+                onClick={() => handleLanguageChange('pt')}
+                aria-label={`${t.toggleLanguage}: Portugues`}
+              >
+                PT
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

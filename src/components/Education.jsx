@@ -5,76 +5,38 @@ export default function Education() {
   const t = translations.education;
 
   return (
-    <section id="education" className="defer-render py-24 dark:bg-gray-950 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
-            {t.eyebrow}
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold dark:text-white text-gray-900">{t.title}</h2>
-          <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
+    <section id="education" className="defer-render py-24">
+      <div className="section-shell">
+        <div className="section-title">
+          <span className="section-title-index">04.</span>
+          <h2 className="section-title-text">{t.title}</h2>
+          <span className="section-title-line" />
         </div>
 
-        {/* Education cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {t.items.map((edu, idx) => (
-            <div
-              key={idx}
-              className="elegant-card p-6 flex flex-col gap-4"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center shrink-0">
-                  <span className="text-blue-400 font-bold text-xs">{edu.icon}</span>
-                </div>
-                <div>
-                  <h3 className="dark:text-white text-gray-900 font-semibold text-base leading-snug">{edu.institution}</h3>
-                  <p className="dark:text-gray-500 text-gray-600 text-xs mt-0.5 flex items-center gap-1">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {edu.location}
-                  </p>
-                </div>
-              </div>
-
-              <div className="border-t dark:border-gray-800 border-gray-200 pt-4">
-                <p className="text-blue-300 font-medium text-sm mb-1">{edu.degree}</p>
-                <p className="dark:text-gray-500 text-gray-600 text-xs flex items-center gap-1">
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  {edu.period}
-                </p>
-              </div>
-            </div>
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {t.items.map((edu) => (
+            <article key={`${edu.institution}-${edu.period}`} className="glass-card p-6">
+              <p className="mono-label">{edu.icon}</p>
+              <h3 className="mt-3 text-base font-semibold text-[var(--color-text)]">{edu.institution}</h3>
+              <p className="mt-1 text-sm text-[var(--color-muted)]">{edu.degree}</p>
+              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-muted)]">
+                {edu.period}
+              </p>
+              <p className="mt-1 text-xs text-[var(--color-muted)]">{edu.location}</p>
+            </article>
           ))}
         </div>
 
-        {/* Courses */}
-        <div>
-          <h3 className="dark:text-white text-gray-900 font-semibold text-xl mb-6 text-center">
-            {t.coursesTitle}
-          </h3>
-          <div className="flex flex-wrap justify-center gap-4">
-            {t.courses.map((course, idx) => (
-              <div
-                key={idx}
-                className="elegant-card px-6 py-4 flex items-center gap-4"
-              >
-                <div className="w-10 h-10 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="dark:text-white text-gray-900 font-medium text-sm">{course.title}</p>
-                  <p className="dark:text-gray-400 text-gray-600 text-xs">
-                    {course.provider} · {course.date}
-                  </p>
-                </div>
-              </div>
+        <div className="mt-12">
+          <p className="mono-label mb-4">{t.coursesTitle}</p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {t.courses.map((course) => (
+              <article key={course.title} className="glass-card p-4">
+                <h4 className="text-sm font-semibold text-[var(--color-text)]">{course.title}</h4>
+                <p className="mt-2 text-xs text-[var(--color-muted)]">
+                  {course.provider} · {course.date}
+                </p>
+              </article>
             ))}
           </div>
         </div>
