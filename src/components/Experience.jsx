@@ -1,79 +1,65 @@
+import { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Experience() {
   const { translations } = useLanguage();
   const t = translations.experience;
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const activeItem = t.items[activeIndex];
 
   return (
-    <section id="experience" className="defer-render py-24 dark:bg-gray-950 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
-            {t.eyebrow}
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold dark:text-white text-gray-900">{t.title}</h2>
-          <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
+    <section id="experience" className="defer-render py-24">
+      <div className="section-shell">
+        <div className="section-title">
+          <span className="section-title-index">03.</span>
+          <h2 className="section-title-text">{t.title}</h2>
+          <span className="section-title-line" />
         </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-blue-600 via-blue-500/50 to-transparent" />
-
-          <div className="space-y-10">
-            {t.items.map((exp, idx) => (
-              <div key={idx} className="relative pl-12 sm:pl-20">
-                {/* Timeline dot */}
-                <div
-                  className={`absolute left-3.5 sm:left-7 top-6 w-2 h-2 rounded-full border-2 ${
-                    exp.current
-                      ? 'bg-blue-500 border-blue-400 shadow-lg shadow-blue-500/50'
-                      : 'bg-gray-700 border-gray-600'
-                  }`}
-                />
-
-                {/* Card */}
-                <div className="elegant-card border-l-4 border-l-blue-600 p-6 group">
-                  <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
-                    <h3 className="dark:text-white text-gray-900 font-bold text-lg dark:group-hover:text-blue-300 group-hover:text-blue-700 transition-colors">
-                      {exp.role}
-                    </h3>
-                    {exp.current && (
-                      <span className="px-2.5 py-0.5 bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs rounded-full font-medium">
-                        {t.current}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4 text-sm dark:text-gray-400 text-gray-600">
-                    <span className="text-blue-400 font-semibold">{exp.company}</span>
-                    <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      {exp.location}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      {exp.period}
-                    </span>
-                  </div>
-
-                  <ul className="space-y-2">
-                    {exp.bullets.map((bullet, i) => (
-                      <li key={i} className="flex gap-2 dark:text-gray-400 text-gray-700 text-sm leading-relaxed">
-                        <span className="text-blue-500 mt-1.5 shrink-0">▸</span>
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+        <div className="grid gap-6 lg:grid-cols-[230px_1fr]">
+          <div className="glass-card overflow-hidden">
+            {t.items.map((item, index) => (
+              <button
+                key={item.company}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={`w-full border-l-2 px-4 py-3 text-left font-mono text-xs transition-colors ${
+                  index === activeIndex
+                    ? 'border-[var(--color-accent)] bg-[var(--color-chip)] text-[var(--color-accent)]'
+                    : 'border-transparent text-[var(--color-muted)] hover:bg-[var(--color-chip)]'
+                }`}
+              >
+                {item.company}
+              </button>
             ))}
+          </div>
+
+          <div className="glass-card p-6 sm:p-8">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 className="text-xl font-semibold text-[var(--color-text)]">{activeItem.role}</h3>
+                <p className="mt-1 text-sm text-[var(--color-accent)]">@ {activeItem.company}</p>
+              </div>
+              {activeItem.current && (
+                <span className="chip border-[color:var(--color-accent)] text-[var(--color-accent)]">
+                  {t.current}
+                </span>
+              )}
+            </div>
+
+            <p className="mb-6 font-mono text-xs uppercase tracking-[0.16em] text-[var(--color-muted)]">
+              {activeItem.period} · {activeItem.location}
+            </p>
+
+            <ul className="space-y-3">
+              {activeItem.bullets.map((bullet) => (
+                <li key={bullet} className="flex gap-3 text-sm leading-relaxed text-[var(--color-muted)]">
+                  <span className="mt-1 text-[var(--color-accent)]">▹</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

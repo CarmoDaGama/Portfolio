@@ -70,71 +70,58 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="defer-render py-24 dark:bg-gray-900 bg-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
-            {t.eyebrow}
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold dark:text-white text-gray-900">{t.title}</h2>
-          <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
+    <section id="contact" className="defer-render py-24">
+      <div className="section-shell">
+        <div className="section-title">
+          <span className="section-title-index">06.</span>
+          <h2 className="section-title-text">{t.title}</h2>
+          <span className="section-title-line" />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact info */}
-          <div className="space-y-6">
-            <p className="dark:text-gray-400 text-gray-700 text-base leading-relaxed">
-              {t.intro}
-            </p>
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
+          <div className="space-y-5">
+            <p className="max-w-xl text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">{t.intro}</p>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {contactInfo.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center gap-4 group"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 group-hover:bg-blue-600/20 transition-colors">
-                    {item.icon}
-                  </div>
+                <div key={item.label} className="glass-card flex items-center gap-3 px-4 py-3">
+                  <span className="text-[var(--color-accent)]">{item.icon}</span>
                   <div>
-                    <p className="dark:text-gray-500 text-gray-600 text-xs uppercase tracking-wider">{item.label}</p>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-muted)]">
+                      {item.label}
+                    </p>
                     {item.href ? (
                       <a
                         href={item.href}
                         target={item.href.startsWith('http') ? '_blank' : undefined}
                         rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="dark:text-gray-200 text-gray-800 hover:text-blue-500 transition-colors text-sm font-medium"
+                        className="text-sm text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
                       >
                         {item.value}
                       </a>
                     ) : (
-                      <p className="dark:text-gray-200 text-gray-800 text-sm font-medium">{item.value}</p>
+                      <p className="text-sm text-[var(--color-text)]">{item.value}</p>
                     )}
                   </div>
                 </div>
               ))}
             </div>
+
+            <a href="mailto:carmodagama@gmail.com" className="solid-button inline-block">
+              Say Hello
+            </a>
           </div>
 
-          {/* Contact form */}
-          <div className="elegant-card p-8">
+          <div className="glass-card p-6 sm:p-8">
             {submitted ? (
-              <div className="flex flex-col items-center justify-center h-full gap-4 py-8">
-                <div className="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <p className="dark:text-white text-gray-900 font-semibold text-lg">{t.form.successTitle}</p>
-                <p className="dark:text-gray-400 text-gray-600 text-sm text-center">
-                  {t.form.successText}
-                </p>
+              <div className="flex h-full flex-col items-center justify-center gap-3 py-6 text-center">
+                <p className="font-mono text-sm text-[var(--color-accent)]">{t.form.successTitle}</p>
+                <p className="text-sm text-[var(--color-muted)]">{t.form.successText}</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block dark:text-gray-400 text-gray-700 text-sm font-medium mb-1.5">
+                  <label htmlFor="name" className="mb-1.5 block font-mono text-xs text-[var(--color-muted)]">
                     {t.form.name}
                   </label>
                   <input
@@ -145,11 +132,12 @@ export default function Contact() {
                     value={form.name}
                     onChange={handleChange}
                     placeholder={t.form.namePlaceholder}
-                    className="w-full dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 dark:text-white text-gray-900 dark:placeholder-gray-500 placeholder-gray-400 text-sm outline-none transition-colors"
+                    className="w-full rounded border border-[var(--color-line)] bg-[color:color-mix(in_srgb,var(--color-surface)_88%,transparent)] px-3 py-2.5 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)]"
                   />
                 </div>
+
                 <div>
-                  <label htmlFor="email" className="block dark:text-gray-400 text-gray-700 text-sm font-medium mb-1.5">
+                  <label htmlFor="email" className="mb-1.5 block font-mono text-xs text-[var(--color-muted)]">
                     {t.form.email}
                   </label>
                   <input
@@ -160,11 +148,12 @@ export default function Contact() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder={t.form.emailPlaceholder}
-                    className="w-full dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 dark:text-white text-gray-900 dark:placeholder-gray-500 placeholder-gray-400 text-sm outline-none transition-colors"
+                    className="w-full rounded border border-[var(--color-line)] bg-[color:color-mix(in_srgb,var(--color-surface)_88%,transparent)] px-3 py-2.5 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)]"
                   />
                 </div>
+
                 <div>
-                  <label htmlFor="message" className="block dark:text-gray-400 text-gray-700 text-sm font-medium mb-1.5">
+                  <label htmlFor="message" className="mb-1.5 block font-mono text-xs text-[var(--color-muted)]">
                     {t.form.message}
                   </label>
                   <textarea
@@ -175,13 +164,11 @@ export default function Contact() {
                     value={form.message}
                     onChange={handleChange}
                     placeholder={t.form.messagePlaceholder}
-                    className="w-full dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 dark:text-white text-gray-900 dark:placeholder-gray-500 placeholder-gray-400 text-sm outline-none transition-colors resize-none"
+                    className="w-full resize-none rounded border border-[var(--color-line)] bg-[color:color-mix(in_srgb,var(--color-surface)_88%,transparent)] px-3 py-2.5 text-sm text-[var(--color-text)] outline-none transition-colors placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)]"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg shadow-blue-600/20 hover:shadow-blue-500/30 hover:-translate-y-0.5"
-                >
+
+                <button type="submit" className="solid-button w-full">
                   {t.form.submit}
                 </button>
               </form>
