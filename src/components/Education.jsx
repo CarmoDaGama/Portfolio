@@ -1,51 +1,24 @@
-const educations = [
-  {
-    institution: '42',
-    location: 'Luanda, Angola',
-    degree: 'Computer Science Core',
-    period: 'May 2024 – May 2026',
-    icon: '42',
-  },
-  {
-    institution: 'Open Source Society University',
-    location: 'Remote',
-    degree: 'Bachelor in Computer Science',
-    period: 'Jan 2024 – Dec 2026',
-    icon: 'OS',
-  },
-  {
-    institution: 'Instituto Politécnico Industrial De Luanda (IPIL) Makarenko',
-    location: 'Luanda, Angola',
-    degree: 'IT/Computer Administration and Management',
-    period: 'Jan 2016 – Dec 2019',
-    icon: 'IP',
-  },
-];
-
-const courses = [
-  {
-    title: 'C Piscine, Computer Programming',
-    provider: '42',
-    date: 'Mar 2024',
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Education() {
+  const { translations } = useLanguage();
+  const t = translations.education;
+
   return (
     <section id="education" className="py-24 bg-gray-950">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-16">
           <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
-            Academic Background
+            {t.eyebrow}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">Education</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">{t.title}</h2>
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
         </div>
 
         {/* Education cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {educations.map((edu, idx) => (
+          {t.items.map((edu, idx) => (
             <div
               key={idx}
               className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-500/40 transition-all duration-300 hover:shadow-lg hover:shadow-blue-900/10 flex flex-col gap-4"
@@ -82,10 +55,10 @@ export default function Education() {
         {/* Courses */}
         <div>
           <h3 className="text-white font-semibold text-xl mb-6 text-center">
-            Certifications &amp; Courses
+            {t.coursesTitle}
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
-            {courses.map((course, idx) => (
+            {t.courses.map((course, idx) => (
               <div
                 key={idx}
                 className="bg-gray-900 border border-gray-800 rounded-xl px-6 py-4 flex items-center gap-4 hover:border-blue-500/40 transition-colors"

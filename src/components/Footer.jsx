@@ -1,4 +1,9 @@
+import { useLanguage } from '../context/LanguageContext';
+
 export default function Footer() {
+  const { translations } = useLanguage();
+  const t = translations.footer;
+
   return (
     <footer className="bg-gray-950 border-t border-gray-800 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -11,13 +16,13 @@ export default function Footer() {
           </div>
 
           <p className="text-gray-500 text-sm">
-            Built with{' '}
+            {t.builtWith}{' '}
             <span className="text-blue-400">React</span> &amp;{' '}
             <span className="text-blue-400">Vite</span>
           </p>
 
           <p className="text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} Carmo Da Gama. All rights reserved.
+            &copy; {new Date().getFullYear()} Carmo Da Gama. {t.rights}
           </p>
         </div>
       </div>
