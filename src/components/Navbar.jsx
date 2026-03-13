@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Education', href: '#education' },
-  { label: 'Contact', href: '#contact' },
+  { key: 'about', href: '#about' },
+  { key: 'skills', href: '#skills' },
+  { key: 'experience', href: '#experience' },
+  { key: 'education', href: '#education' },
+  { key: 'contact', href: '#contact' },
 ];
 
 export default function Navbar() {
+  const { language, setLanguage, translations } = useLanguage();
+  const t = translations.nav;
+
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
@@ -39,6 +43,10 @@ export default function Navbar() {
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleLanguageChange = (nextLanguage) => {
+    setLanguage(nextLanguage);
   };
 
   return (
@@ -76,17 +84,40 @@ export default function Navbar() {
                       : 'text-gray-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  {link.label}
+                  {t[link.key]}
                 </a>
               </li>
             ))}
           </ul>
+
+          <div className="hidden md:flex items-center gap-1 rounded-lg border border-gray-700 p-1">
+            <button
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                language === 'en' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:text-white'
+              }`}
+              onClick={() => handleLanguageChange('en')}
+              aria-label={`${t.toggleLanguage}: English`}
+            >
+              EN
+            </button>
+            <button
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                language === 'pt' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:text-white'
+              }`}
+              onClick={() => handleLanguageChange('pt')}
+              aria-label={`${t.toggleLanguage}: Portugues`}
+            >
+              PT
+            </button>
+          </div>
 
           {/* Mobile hamburger */}
           <button
             className="md:hidden flex flex-col gap-1.5 p-2 text-gray-300 hover:text-white"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
             <span
               className={`block w-6 h-0.5 bg-current transition-all duration-300 ${
@@ -108,10 +139,31 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         <div
+          id="mobile-menu"
           className={`md:hidden transition-all duration-300 overflow-hidden ${
             isOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
+          <div className="px-4 pt-3 pb-2 border-t border-gray-800 flex items-center gap-2">
+            <button
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                language === 'en' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:text-white'
+              }`}
+              onClick={() => handleLanguageChange('en')}
+              aria-label={`${t.toggleLanguage}: English`}
+            >
+              EN
+            </button>
+            <button
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
+                language === 'pt' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:text-white'
+              }`}
+              onClick={() => handleLanguageChange('pt')}
+              aria-label={`${t.toggleLanguage}: Portugues`}
+            >
+              PT
+            </button>
+          </div>
           <ul className="py-2 space-y-1 border-t border-gray-800">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -124,7 +176,7 @@ export default function Navbar() {
                       : 'text-gray-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  {link.label}
+                  {t[link.key]}
                 </a>
               </li>
             ))}

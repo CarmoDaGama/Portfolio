@@ -1,57 +1,18 @@
-const experiences = [
-  {
-    role: 'Fullstack Developer',
-    company: 'Self-employed',
-    location: 'Luanda, Angola',
-    period: 'Oct 2024 – Present',
-    current: true,
-    bullets: [
-      'Develop and deliver full-stack web projects using React.js + Node.js/Laravel + Firebase, focused on maintenance, evolution and rapid launch of internal applications and dashboards.',
-      'Create and integrate frontend and backend modules, including external RESTful APIs (Google Maps, WeatherAPI, Directions API), delivering functional MVPs of health and monitoring apps in 3–4 weeks.',
-      'Identify and fix bugs, implement usability tests, offline support and complete technical documentation.',
-      'Use modular architectures (NestJS, Flutter, Expo) and CI/CD tools (Nx/Turborepo) to deliver scalable cross-platform solutions.',
-      'Collaborate with clients and remote teams on requirements analysis, technical specifications and 30-day post-delivery support.',
-      'Develop mobile applications with React Native, prioritizing cybersecurity, authentication and RESTful integrations in public health projects.',
-    ],
-  },
-  {
-    role: 'Fullstack Developer',
-    company: 'Kivembasoft',
-    location: 'Luanda, Angola',
-    period: 'May 2022 – Sep 2024',
-    current: false,
-    bullets: [
-      'Maintained and evolved internal web applications for AGT-certified billing, developing and improving frontend and backend modules.',
-      'Performed complex RESTful and SOAP API integrations with external systems (banks, payment operators and AGT services).',
-      'Identified and fixed critical production bugs, implementing automated tests (unit and integration) and complete technical documentation.',
-      'Collaborated daily with multidisciplinary teams (product, QA and operations) using agile methodologies (Scrum/Kanban) and Git version control.',
-      'Optimized relational and non-relational databases (MySQL, MongoDB and SQL Server) in high-transaction environments.',
-      'Contributed to best practices, CI/CD (Azure DevOps) and code versioning in a hybrid/remote environment.',
-    ],
-  },
-  {
-    role: 'Back-End Developer',
-    company: 'Crisoftec',
-    location: 'Luanda, Angola',
-    period: 'Sep 2019 – Nov 2021',
-    current: false,
-    bullets: [
-      'Responsible for developing high-quality, scalable and easy-to-maintain Web and Desktop applications for Web and Windows platforms.',
-      'Collaborated with cross-functional teams including designers and product managers to translate business requirements into technical specifications.',
-    ],
-  },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Experience() {
+  const { translations } = useLanguage();
+  const t = translations.experience;
+
   return (
     <section id="experience" className="py-24 bg-[#0a0a0a]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-16">
           <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
-            My Journey
+            {t.eyebrow}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">Work Experience</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">{t.title}</h2>
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
         </div>
 
@@ -61,7 +22,7 @@ export default function Experience() {
           <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-blue-600 via-blue-500/50 to-transparent" />
 
           <div className="space-y-10">
-            {experiences.map((exp, idx) => (
+            {t.items.map((exp, idx) => (
               <div key={idx} className="relative pl-12 sm:pl-20">
                 {/* Timeline dot */}
                 <div
@@ -80,7 +41,7 @@ export default function Experience() {
                     </h3>
                     {exp.current && (
                       <span className="px-2.5 py-0.5 bg-blue-600/20 text-blue-400 border border-blue-500/30 text-xs rounded-full font-medium">
-                        Current
+                        {t.current}
                       </span>
                     )}
                   </div>

@@ -1,19 +1,18 @@
-const stats = [
-  { value: '5+', label: 'Years of Experience' },
-  { value: '20+', label: 'Projects Completed' },
-  { value: '15+', label: 'Technologies' },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function About() {
+  const { translations } = useLanguage();
+  const t = translations.about;
+
   return (
     <section id="about" className="py-24 bg-[#0a0a0a]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-16">
           <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
-            Who I Am
+            {t.eyebrow}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">About Me</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">{t.title}</h2>
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
         </div>
 
@@ -36,9 +35,9 @@ export default function About() {
               </div>
               <p className="text-blue-400">const <span className="text-green-400">developer</span> = {'{'}</p>
               <p className="text-gray-300 pl-4">name: <span className="text-yellow-300">&quot;Carmo Da Gama&quot;</span>,</p>
-              <p className="text-gray-300 pl-4">role: <span className="text-yellow-300">&quot;Full-Stack Dev&quot;</span>,</p>
+              <p className="text-gray-300 pl-4">role: <span className="text-yellow-300">&quot;{t.codeRole}&quot;</span>,</p>
               <p className="text-gray-300 pl-4">experience: <span className="text-purple-400">5</span>,</p>
-              <p className="text-gray-300 pl-4">passion: <span className="text-yellow-300">&quot;Building things&quot;</span></p>
+              <p className="text-gray-300 pl-4">passion: <span className="text-yellow-300">&quot;{t.codePassion}&quot;</span></p>
               <p className="text-blue-400">{'}'}</p>
             </div>
           </div>
@@ -46,25 +45,18 @@ export default function About() {
           {/* Right: profile text + stats */}
           <div className="space-y-6">
             <p className="text-gray-300 text-base leading-relaxed">
-              I&apos;m a <span className="text-white font-semibold">Full-Stack Developer</span> specialized in
-              React.js + Node.js/Laravel with over{' '}
-              <span className="text-blue-400 font-semibold">5 years of experience</span> in maintenance,
-              evolution and development of internal web applications and critical systems.
+              {t.paragraphs[0]}
             </p>
             <p className="text-gray-300 text-base leading-relaxed">
-              My expertise spans frontend and backend module creation, complex API integrations
-              (RESTful/SOAP), bug fixing, automated testing (unit and integration) and complete
-              technical documentation.
+              {t.paragraphs[1]}
             </p>
             <p className="text-gray-300 text-base leading-relaxed">
-              Currently studying Computer Science at{' '}
-              <span className="text-blue-400 font-semibold">Escola 42 Luanda</span>, focused on
-              Cybersecurity, Operating Systems and Kernel Development — always pushing boundaries.
+              {t.paragraphs[2]}
             </p>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 pt-4">
-              {stats.map((stat) => (
+              {t.stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center hover:border-blue-500/50 transition-colors"
@@ -80,7 +72,7 @@ export default function About() {
                 href="mailto:carmodagama@gmail.com"
                 className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-lg transition-colors"
               >
-                Hire Me
+                {t.hire}
               </a>
               <a
                 href="https://linkedin.com/in/carmodagama"
@@ -88,7 +80,7 @@ export default function About() {
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white text-sm font-semibold rounded-lg transition-colors"
               >
-                LinkedIn
+                {t.linkedin}
               </a>
             </div>
           </div>
