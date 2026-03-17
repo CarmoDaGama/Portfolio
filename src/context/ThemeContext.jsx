@@ -7,12 +7,8 @@ export const ThemeProvider = ({ children }) => {
     // Check localStorage first
     const stored = localStorage.getItem('theme');
     if (stored) return stored;
-    
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'dark'; // Default to dark
+
+    return 'light'; // Default to light
   });
 
   useEffect(() => {

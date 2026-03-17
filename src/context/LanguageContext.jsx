@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { translations } from '../i18n/translations';
 
-const LanguageContext = createContext(null);
+const LanguageContext = createContext(null);  
 
 const SUPPORTED_LANGUAGES = ['en', 'pt'];
 
@@ -12,8 +12,7 @@ function getDefaultLanguage() {
     return storedLanguage;
   }
 
-  const browserLanguage = navigator.language?.toLowerCase() || 'en';
-  return browserLanguage.startsWith('pt') ? 'pt' : 'en';
+  return 'pt';
 }
 
 export function LanguageProvider({ children }) {
