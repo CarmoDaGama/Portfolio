@@ -5,14 +5,14 @@ export default function About() {
   const t = translations.about;
 
   return (
-    <section id="about" className="py-24 bg-[#0a0a0a]">
+    <section id="about" className="defer-render py-24 dark:bg-gray-950 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-16">
           <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
             {t.eyebrow}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">{t.title}</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold dark:text-white text-gray-900">{t.title}</h2>
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
         </div>
 
@@ -27,30 +27,30 @@ export default function About() {
             </div>
 
             {/* Code decoration */}
-            <div className="bg-gray-900 border border-gray-700 rounded-xl p-5 font-mono text-sm w-full max-w-xs">
+            <div className="elegant-card p-5 font-mono text-sm w-full max-w-xs">
               <div className="flex gap-1.5 mb-3">
                 <span className="w-3 h-3 rounded-full bg-red-500" />
                 <span className="w-3 h-3 rounded-full bg-yellow-500" />
                 <span className="w-3 h-3 rounded-full bg-green-500" />
               </div>
               <p className="text-blue-400">const <span className="text-green-400">developer</span> = {'{'}</p>
-              <p className="text-gray-300 pl-4">name: <span className="text-yellow-300">&quot;Carmo Da Gama&quot;</span>,</p>
-              <p className="text-gray-300 pl-4">role: <span className="text-yellow-300">&quot;{t.codeRole}&quot;</span>,</p>
-              <p className="text-gray-300 pl-4">experience: <span className="text-purple-400">5</span>,</p>
-              <p className="text-gray-300 pl-4">passion: <span className="text-yellow-300">&quot;{t.codePassion}&quot;</span></p>
+              <p className="dark:text-gray-300 text-gray-700 pl-4">name: <span className="text-yellow-500 dark:text-yellow-300">&quot;Carmo Da Gama&quot;</span>,</p>
+              <p className="dark:text-gray-300 text-gray-700 pl-4">role: <span className="text-yellow-500 dark:text-yellow-300">&quot;{t.codeRole}&quot;</span>,</p>
+              <p className="dark:text-gray-300 text-gray-700 pl-4">experience: <span className="text-purple-600 dark:text-purple-400">5</span>,</p>
+              <p className="dark:text-gray-300 text-gray-700 pl-4">passion: <span className="text-yellow-500 dark:text-yellow-300">&quot;{t.codePassion}&quot;</span></p>
               <p className="text-blue-400">{'}'}</p>
             </div>
           </div>
 
           {/* Right: profile text + stats */}
           <div className="space-y-6">
-            <p className="text-gray-300 text-base leading-relaxed">
+            <p className="dark:text-gray-300 text-gray-700 text-base leading-relaxed">
               {t.paragraphs[0]}
             </p>
-            <p className="text-gray-300 text-base leading-relaxed">
+            <p className="dark:text-gray-300 text-gray-700 text-base leading-relaxed">
               {t.paragraphs[1]}
             </p>
-            <p className="text-gray-300 text-base leading-relaxed">
+            <p className="dark:text-gray-300 text-gray-700 text-base leading-relaxed">
               {t.paragraphs[2]}
             </p>
 
@@ -59,10 +59,10 @@ export default function About() {
               {t.stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="bg-gray-900 border border-gray-800 rounded-xl p-4 text-center hover:border-blue-500/50 transition-colors"
+                  className="elegant-card p-4 text-center"
                 >
                   <p className="text-3xl font-extrabold text-blue-400">{stat.value}</p>
-                  <p className="text-gray-400 text-xs mt-1">{stat.label}</p>
+                  <p className="dark:text-gray-400 text-gray-600 text-xs mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -78,7 +78,7 @@ export default function About() {
                 href="https://linkedin.com/in/carmodagama"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-5 py-2.5 border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white text-sm font-semibold rounded-lg transition-colors"
+                className="px-5 py-2.5 dark:border-gray-700 border-gray-300 hover:border-blue-500 dark:text-gray-300 text-gray-700 dark:hover:text-white hover:text-gray-900 text-sm font-semibold rounded-lg transition-colors"
               >
                 {t.linkedin}
               </a>
