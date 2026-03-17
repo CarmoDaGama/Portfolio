@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import tmicroPreview from '../assets/project-tmicro.svg';
-import trimedPreview from '../assets/project-trimed.svg';
-import zenixPreview from '../assets/project-zenix.svg';
+import tmicroPreview from '../assets/project-tmicro.webp';
+import trimedPreview from '../assets/project-trimed.webp';
+import zenixPreview from '../assets/project-zenix.webp';
 
 const projectPreviews = {
   tmicro: tmicroPreview,
@@ -14,50 +14,105 @@ export default function Projects() {
   const { translations } = useLanguage();
   const t = translations.projects;
   const [visiblePasswords, setVisiblePasswords] = useState({});
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedTag, setSelectedTag] = useState(null);
+
+  // Get all unique tags from projects
+  const allTags = Array.from(
+    new Set(t.items.flatMap((project) => project.tags))
+  ).sort();
+
+  // Filter projects based on selected tag
+  const filteredProjects = selectedTag
+    ? t.items.filter((project) => project.tags.includes(selectedTag))
+    : t.items;
 
   const togglePassword = (idx) => {
     setVisiblePasswords((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
 
+  const handleOpenDemoPrompt = (project) => {
+    setSelectedProject(project);
+  };
+
+  const handleCloseDemoPrompt = () => {
+    setSelectedProject(null);
+  };
+
+  const handleProceedToDemo = () => {
+    if (!selectedProject?.url) return;
+    window.open(selectedProject.url, '_blank', 'noopener,noreferrer');
+    handleCloseDemoPrompt();
+  };
+
   return (
-    <section id="projects" className="py-24 bg-gray-950">
+    <section id="projects" className="defer-render py-24 dark:bg-gray-950 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-16">
           <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
             {t.eyebrow}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">{t.title}</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold dark:text-white text-gray-900">{t.title}</h2>
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
         </div>
 
+        {/* Filter tags */}
+        <div className="flex flex-wrap gap-3 justify-center mb-12">
+          <button
+            onClick={() => setSelectedTag(null)}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              selectedTag === null
+                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/50'
+                : 'dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            All
+          </button>
+          {allTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setSelectedTag(tag)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                selectedTag === tag
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/50'
+                  : 'dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
         {/* Project cards grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {t.items.map((project, idx) => (
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 animate-fade-in">
+          {filteredProjects.map((project, idx) => (
             <div
               key={idx}
-              className="group bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 flex flex-col"
+              className="group elegant-card flex flex-col"
             >
-              <div className="relative aspect-[16/10] overflow-hidden border-b border-gray-800 bg-gray-950">
+              <div className="relative aspect-[16/10] overflow-hidden dark:border-gray-800 border-gray-200 border-b dark:bg-gray-950 bg-gray-100">
                 <img
                   src={projectPreviews[project.id]}
-                  alt={project.name}
+                  alt={`Preview do projeto ${project.name}`}
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/10 to-transparent" />
-                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/10 bg-gray-950/75 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-300 backdrop-blur">
+                <div className="absolute inset-0 dark:bg-gradient-to-t dark:from-gray-950 dark:via-gray-950/10 bg-gradient-to-t from-white via-white/10 to-transparent" />
+                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full dark:border-white/10 dark:bg-gray-950/75 border-gray-300 bg-white/75 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] dark:text-blue-300 text-blue-600 backdrop-blur">
                   Preview
                 </div>
               </div>
 
               <div className="p-6 flex flex-col flex-1">
                 {/* Project name */}
-                <h3 className="text-white font-bold text-xl mb-2 group-hover:text-blue-300 transition-colors">
+                <h3 className="dark:text-white text-gray-900 font-bold text-xl mb-2 group-hover:text-blue-400 transition-colors">
                   {project.name}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-400 text-sm leading-relaxed mb-5 flex-1">
+                <p className="dark:text-gray-400 text-gray-600 text-sm leading-relaxed mb-5 flex-1">
                   {project.description}
                 </p>
 
@@ -66,7 +121,7 @@ export default function Projects() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 bg-blue-600/10 text-blue-400 border border-blue-500/20 text-xs rounded-full font-medium"
+                      className="px-2.5 py-1 dark:bg-blue-600/10 dark:text-blue-400 dark:border-blue-500/20 bg-blue-100 text-blue-600 border-blue-300 border text-xs rounded-full font-medium"
                     >
                       {tag}
                     </span>
@@ -74,8 +129,8 @@ export default function Projects() {
                 </div>
 
                 {/* Demo credentials */}
-                <div className="bg-gray-800/60 rounded-xl p-4 mb-5 border border-gray-700/50">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                <div className="elegant-subcard p-4 mb-5">
+                  <p className="text-xs font-semibold dark:text-gray-400 text-gray-600 uppercase tracking-wider mb-3 flex items-center gap-1.5">
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                     </svg>
@@ -83,19 +138,19 @@ export default function Projects() {
                   </p>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
-                      <span className="text-gray-500 w-20 shrink-0">{t.userLabel}:</span>
-                      <code className="text-blue-300 bg-gray-900/60 px-2 py-0.5 rounded text-xs break-all">
+                      <span className="dark:text-gray-500 text-gray-500 w-20 shrink-0">{t.userLabel}:</span>
+                      <code className="dark:text-blue-300 text-blue-600 dark:bg-gray-900/60 bg-gray-200/50 px-2 py-0.5 rounded text-xs break-all">
                         {project.user}
                       </code>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-gray-500 w-20 shrink-0">{t.passwordLabel}:</span>
-                      <code className="text-blue-300 bg-gray-900/60 px-2 py-0.5 rounded text-xs font-mono">
+                      <span className="dark:text-gray-500 text-gray-500 w-20 shrink-0">{t.passwordLabel}:</span>
+                      <code className="dark:text-blue-300 text-blue-600 dark:bg-gray-900/60 bg-gray-200/50 px-2 py-0.5 rounded text-xs font-mono">
                         {visiblePasswords[idx] ? project.password : '••••••••'}
                       </code>
                       <button
                         onClick={() => togglePassword(idx)}
-                        className="ml-auto text-gray-500 hover:text-gray-300 transition-colors shrink-0"
+                        className="ml-auto dark:text-gray-500 dark:hover:text-gray-300 text-gray-500 hover:text-gray-700 transition-colors shrink-0"
                         aria-label="Toggle password visibility"
                       >
                         {visiblePasswords[idx] ? (
@@ -114,22 +169,64 @@ export default function Projects() {
                 </div>
 
                 {/* Live demo link */}
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => handleOpenDemoPrompt(project)}
                   className="flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl transition-colors duration-200"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                   {t.liveDemo}
-                </a>
+                </button>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {selectedProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center dark:bg-black/70 bg-black/50 px-4">
+          <div className="w-full max-w-md rounded-2xl border border-blue-300/80 dark:border-blue-500/30 dark:bg-gray-900 bg-white p-6 shadow-2xl dark:shadow-blue-900/30 shadow-blue-300/25">
+            <h3 className="text-xl font-bold dark:text-white text-gray-900 mb-2">{t.modalTitle}</h3>
+            <p className="text-sm dark:text-gray-300 text-gray-600 mb-5">
+              {t.modalText} <span className="dark:text-blue-300 text-blue-600 font-semibold">{selectedProject.name}</span>
+            </p>
+
+            <div className="elegant-subcard p-4 space-y-3 mb-6">
+              <div className="flex items-center gap-2 text-sm">
+                <span className="dark:text-gray-400 text-gray-600 w-24 shrink-0">{t.userLabel}:</span>
+                <code className="dark:text-blue-300 text-blue-600 dark:bg-gray-900/70 bg-gray-200 px-2 py-0.5 rounded text-xs break-all">
+                  {selectedProject.user}
+                </code>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <span className="dark:text-gray-400 text-gray-600 w-24 shrink-0">{t.passwordLabel}:</span>
+                <code className="dark:text-blue-300 text-blue-600 dark:bg-gray-900/70 bg-gray-200 px-2 py-0.5 rounded text-xs break-all">
+                  {selectedProject.password}
+                </code>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={handleCloseDemoPrompt}
+                className="flex-1 rounded-xl dark:border-gray-600 border-gray-300 border px-4 py-2.5 text-sm font-semibold dark:text-gray-200 text-gray-700 dark:hover:bg-gray-800 hover:bg-gray-100 transition-colors"
+              >
+                {t.modalCancel}
+              </button>
+              <button
+                type="button"
+                onClick={handleProceedToDemo}
+                className="flex-1 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+              >
+                {t.modalProceed}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

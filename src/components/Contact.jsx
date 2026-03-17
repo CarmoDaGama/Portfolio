@@ -58,27 +58,33 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const subject = `Portfolio Contact - ${form.name}`;
+    const body = `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
+    const mailtoUrl = `mailto:carmodagama@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoUrl;
     setSubmitted(true);
     setForm({ name: '', email: '', message: '' });
     setTimeout(() => setSubmitted(false), 5000);
   };
 
   return (
-    <section id="contact" className="py-24 bg-[#0a0a0a]">
+    <section id="contact" className="defer-render py-24 dark:bg-gray-900 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
+        {/* Section Header */}
         <div className="text-center mb-16">
           <p className="text-blue-400 font-medium tracking-widest uppercase text-sm mb-2">
             {t.eyebrow}
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white">{t.title}</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold dark:text-white text-gray-900">{t.title}</h2>
           <div className="w-16 h-1 bg-blue-600 mx-auto mt-4 rounded-full" />
         </div>
 
         <div className="grid md:grid-cols-2 gap-12">
           {/* Contact info */}
           <div className="space-y-6">
-            <p className="text-gray-400 text-base leading-relaxed">
+            <p className="dark:text-gray-400 text-gray-700 text-base leading-relaxed">
               {t.intro}
             </p>
 
@@ -92,18 +98,18 @@ export default function Contact() {
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-gray-500 text-xs uppercase tracking-wider">{item.label}</p>
+                    <p className="dark:text-gray-500 text-gray-600 text-xs uppercase tracking-wider">{item.label}</p>
                     {item.href ? (
                       <a
                         href={item.href}
                         target={item.href.startsWith('http') ? '_blank' : undefined}
                         rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        className="text-gray-200 hover:text-blue-400 transition-colors text-sm font-medium"
+                        className="dark:text-gray-200 text-gray-800 hover:text-blue-500 transition-colors text-sm font-medium"
                       >
                         {item.value}
                       </a>
                     ) : (
-                      <p className="text-gray-200 text-sm font-medium">{item.value}</p>
+                      <p className="dark:text-gray-200 text-gray-800 text-sm font-medium">{item.value}</p>
                     )}
                   </div>
                 </div>
@@ -112,7 +118,7 @@ export default function Contact() {
           </div>
 
           {/* Contact form */}
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-8">
+          <div className="elegant-card p-8">
             {submitted ? (
               <div className="flex flex-col items-center justify-center h-full gap-4 py-8">
                 <div className="w-16 h-16 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center">
@@ -120,15 +126,15 @@ export default function Contact() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <p className="text-white font-semibold text-lg">{t.form.successTitle}</p>
-                <p className="text-gray-400 text-sm text-center">
+                <p className="dark:text-white text-gray-900 font-semibold text-lg">{t.form.successTitle}</p>
+                <p className="dark:text-gray-400 text-gray-600 text-sm text-center">
                   {t.form.successText}
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                  <label htmlFor="name" className="block text-gray-400 text-sm font-medium mb-1.5">
+                  <label htmlFor="name" className="block dark:text-gray-400 text-gray-700 text-sm font-medium mb-1.5">
                     {t.form.name}
                   </label>
                   <input
@@ -139,11 +145,11 @@ export default function Contact() {
                     value={form.name}
                     onChange={handleChange}
                     placeholder={t.form.namePlaceholder}
-                    className="w-full bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 text-white placeholder-gray-500 text-sm outline-none transition-colors"
+                    className="w-full dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 dark:text-white text-gray-900 dark:placeholder-gray-500 placeholder-gray-400 text-sm outline-none transition-colors"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-gray-400 text-sm font-medium mb-1.5">
+                  <label htmlFor="email" className="block dark:text-gray-400 text-gray-700 text-sm font-medium mb-1.5">
                     {t.form.email}
                   </label>
                   <input
@@ -154,11 +160,11 @@ export default function Contact() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder={t.form.emailPlaceholder}
-                    className="w-full bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 text-white placeholder-gray-500 text-sm outline-none transition-colors"
+                    className="w-full dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 dark:text-white text-gray-900 dark:placeholder-gray-500 placeholder-gray-400 text-sm outline-none transition-colors"
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-gray-400 text-sm font-medium mb-1.5">
+                  <label htmlFor="message" className="block dark:text-gray-400 text-gray-700 text-sm font-medium mb-1.5">
                     {t.form.message}
                   </label>
                   <textarea
@@ -169,7 +175,7 @@ export default function Contact() {
                     value={form.message}
                     onChange={handleChange}
                     placeholder={t.form.messagePlaceholder}
-                    className="w-full bg-gray-800 border border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 text-white placeholder-gray-500 text-sm outline-none transition-colors resize-none"
+                    className="w-full dark:bg-gray-800 bg-white dark:border-gray-700 border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50 rounded-lg px-4 py-3 dark:text-white text-gray-900 dark:placeholder-gray-500 placeholder-gray-400 text-sm outline-none transition-colors resize-none"
                   />
                 </div>
                 <button
@@ -178,9 +184,6 @@ export default function Contact() {
                 >
                   {t.form.submit}
                 </button>
-                <p className="text-gray-600 text-xs text-center">
-                  {t.form.helper}
-                </p>
               </form>
             )}
           </div>
