@@ -26,7 +26,7 @@ export default function About() {
             ))}
 
             <div className="pt-3">
-              <p className="mono-label mb-3">Recent technologies</p>
+              <p className="mono-label mb-3">{t.recentTechnologies}</p>
               <ul className="grid grid-cols-2 gap-2 sm:max-w-xl">
                 {recentTech.map((tech) => (
                   <li key={tech} className="font-mono text-xs text-[var(--color-muted)]">
@@ -65,7 +65,7 @@ export default function About() {
             <div className="relative overflow-hidden rounded-xl border border-[var(--color-line)]">
               <img
                 src={heroPortrait}
-                alt="Developer portrait"
+                alt={t.profileAlt}
                 className="h-[420px] w-full object-cover object-center"
                 loading="lazy"
                 decoding="async"

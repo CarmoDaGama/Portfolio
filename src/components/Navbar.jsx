@@ -20,9 +20,6 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
 
-  const homeLabel = language === 'pt' ? 'Inicio' : 'Home';
-  const resumeLabel = language === 'pt' ? 'CV' : 'Resume';
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -78,7 +75,7 @@ export default function Navbar() {
           >
             <span className="font-mono text-lg tracking-[0.18em] text-[var(--color-accent)]">CG.</span>
             <span className="hidden text-xs uppercase tracking-[0.18em] text-[var(--color-muted)] transition-colors group-hover:text-[var(--color-accent)] sm:block">
-              Full-Stack
+              {t.brandRole}
             </span>
           </a>
 
@@ -92,7 +89,7 @@ export default function Navbar() {
                   : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
               }`}
             >
-              {homeLabel}
+              {t.home}
             </a>
 
             {navLinks.map((link) => (
@@ -111,7 +108,7 @@ export default function Navbar() {
               </a>
             ))}
             <a href="#contact" onClick={(e) => handleLinkClick(e, '#contact')} className="outline-button ml-2 py-2">
-              {resumeLabel}
+              {t.resume}
             </a>
           </div>
 
@@ -119,7 +116,7 @@ export default function Navbar() {
             <button
               onClick={toggleTheme}
               className="rounded border border-[var(--color-line)] p-2 text-[var(--color-muted)] transition-colors hover:text-[var(--color-accent)]"
-              aria-label="Toggle theme"
+              aria-label={t.toggleTheme}
             >
               {theme === 'dark' ? (
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -141,7 +138,7 @@ export default function Navbar() {
                     : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
                 onClick={() => handleLanguageChange('en')}
-                aria-label={`${t.toggleLanguage}: English`}
+                aria-label={`${t.toggleLanguage}: ${t.languageEnglish}`}
               >
                 EN
               </button>
@@ -152,7 +149,7 @@ export default function Navbar() {
                     : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
                 onClick={() => handleLanguageChange('pt')}
-                aria-label={`${t.toggleLanguage}: Portugues`}
+                aria-label={`${t.toggleLanguage}: ${t.languagePortuguese}`}
               >
                 PT
               </button>
@@ -162,7 +159,7 @@ export default function Navbar() {
           <button
             className="flex flex-col gap-1.5 p-2 text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)] lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
+            aria-label={t.toggleMenu}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
           >
@@ -201,7 +198,7 @@ export default function Navbar() {
                   : 'text-[var(--color-muted)]'
               }`}
             >
-              {homeLabel}
+              {t.home}
             </a>
 
             {navLinks.map((link) => (
@@ -225,18 +222,18 @@ export default function Navbar() {
               onClick={(e) => handleLinkClick(e, '#contact')}
               className="block rounded px-4 py-2 text-sm font-mono text-[var(--color-accent)]"
             >
-              {resumeLabel}
+              {t.resume}
             </a>
 
             <div className="flex items-center gap-2 px-4 pt-3">
-            <button
+              <button
                 className={`rounded px-3 py-1 text-xs font-semibold transition-colors ${
                   language === 'en'
                     ? 'bg-[var(--color-accent)] text-white'
                     : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
                 onClick={() => handleLanguageChange('en')}
-                aria-label={`${t.toggleLanguage}: English`}
+                aria-label={`${t.toggleLanguage}: ${t.languageEnglish}`}
               >
                 EN
               </button>
@@ -247,7 +244,7 @@ export default function Navbar() {
                     : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
                 onClick={() => handleLanguageChange('pt')}
-                aria-label={`${t.toggleLanguage}: Portugues`}
+                aria-label={`${t.toggleLanguage}: ${t.languagePortuguese}`}
               >
                 PT
               </button>

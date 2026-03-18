@@ -2,20 +2,8 @@ import { useLanguage } from '../context/LanguageContext';
 import heroPortrait from '../assets/hero.webp';
 
 export default function Hero() {
-  const { translations, language } = useLanguage();
+  const { translations } = useLanguage();
   const t = translations.hero;
-
-  const introLabel = language === 'pt' ? 'Ola, meu nome e' : 'Hi, my name is';
-  const buildLine = language === 'pt' ? 'Eu construo coisas para a web.' : 'I build things for the web.';
-  const valueLine =
-    language === 'pt'
-      ? 'Transformando problemas complexos em sistemas digitais confiaveis.'
-      : 'Turning complex problems into reliable digital systems.';
-
-  const highlightPills =
-    language === 'pt'
-      ? ['Fintech Platforms', 'API Design', 'MVPs em 4 semanas']
-      : ['Fintech Platforms', 'API Design', 'MVPs in 4 weeks'];
 
   const handleScroll = (href) => {
     const target = document.querySelector(href);
@@ -34,11 +22,11 @@ export default function Hero() {
 
       <div className="section-shell relative z-10 grid items-center gap-14 lg:grid-cols-[1.12fr_0.88fr]">
         <div className="fade-in-up">
-          <p className="mono-label mb-6">{introLabel}</p>
+          <p className="mono-label mb-6">{t.introLabel}</p>
 
           <h1 className="text-4xl font-semibold leading-[1.08] sm:text-6xl lg:text-7xl">
             Carmo Da Gama.
-            <span className="mt-2 block text-[var(--color-muted)]">{buildLine}</span>
+            <span className="mt-2 block text-[var(--color-muted)]">{t.buildLine}</span>
           </h1>
 
           <h2 className="mt-8 max-w-xl text-sm leading-relaxed text-[var(--color-muted)] sm:text-base">
@@ -46,11 +34,11 @@ export default function Hero() {
           </h2>
 
           <p className="mt-8 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-accent)]">
-            {valueLine}
+            {t.valueLine}
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
-            {highlightPills.map((pill) => (
+            {t.highlightPills.map((pill) => (
               <span key={pill} className="chip">
                 {pill}
               </span>
@@ -75,7 +63,7 @@ export default function Hero() {
             type="button"
             onClick={() => handleScroll('#about')}
             className="mt-12 inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-[var(--color-muted)] transition-colors hover:text-[var(--color-accent)]"
-            aria-label="Scroll down"
+            aria-label={t.scrollAria}
           >
             <span>{t.scroll}</span>
             <span className="h-px w-10 bg-[var(--color-line)]" />
@@ -87,7 +75,7 @@ export default function Hero() {
             <div className="relative overflow-hidden rounded-xl border border-[var(--color-line)]">
               <img
                 src={heroPortrait}
-                alt="Portrait of Carmo Da Gama"
+                alt={t.profileAlt}
                 className="h-[420px] w-full object-cover object-center"
                 loading="eager"
                 decoding="async"
@@ -101,7 +89,7 @@ export default function Hero() {
           </div>
 
           <div className="absolute -right-8 top-8 hidden rounded-lg border border-[var(--color-line)] bg-[var(--color-surface)] px-4 py-3 shadow-md lg:block">
-            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-accent)]">5+ years</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--color-accent)]">{t.experienceBadge}</p>
           </div>
         </div>
       </div>

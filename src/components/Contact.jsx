@@ -28,7 +28,7 @@ export default function Contact() {
     },
     {
       label: t.info.location,
-      value: 'Luanda, Angola',
+      value: t.locationValue,
       href: null,
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -47,6 +47,16 @@ export default function Contact() {
         </svg>
       ),
     },
+    {
+      label: t.info.github,
+      value: 'github.com/CarmoDaGama',
+      href: 'https://github.com/CarmoDaGama',
+      icon: (
+        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 .5C5.649.5.5 5.649.5 12a11.5 11.5 0 008.005 10.94c.584.108.797-.254.797-.564 0-.278-.01-1.015-.016-1.992-3.256.708-3.943-1.57-3.943-1.57-.532-1.351-1.3-1.712-1.3-1.712-1.062-.726.08-.711.08-.711 1.174.082 1.792 1.205 1.792 1.205 1.044 1.788 2.739 1.271 3.406.972.106-.756.408-1.271.743-1.563-2.6-.296-5.335-1.3-5.335-5.786 0-1.278.457-2.323 1.206-3.142-.121-.296-.523-1.487.114-3.102 0 0 .983-.315 3.22 1.2a11.23 11.23 0 015.864 0c2.236-1.515 3.218-1.2 3.218-1.2.639 1.615.237 2.806.117 3.102.75.819 1.205 1.864 1.205 3.142 0 4.498-2.739 5.486-5.346 5.775.42.361.794 1.075.794 2.167 0 1.565-.014 2.827-.014 3.212 0 .313.21.678.802.563A11.5 11.5 0 0023.5 12C23.5 5.649 18.351.5 12 .5z" />
+        </svg>
+      ),
+    },
   ];
 
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -59,8 +69,8 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const subject = `Portfolio Contact - ${form.name}`;
-    const body = `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
+    const subject = `${t.mailSubjectPrefix} - ${form.name}`;
+    const body = `${t.mailBodyNameLabel}: ${form.name}\n${t.mailBodyEmailLabel}: ${form.email}\n\n${t.mailBodyMessageLabel}:\n${form.message}`;
     const mailtoUrl = `mailto:carmodagama@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     window.location.href = mailtoUrl;
@@ -108,7 +118,7 @@ export default function Contact() {
             </div>
 
             <a href="mailto:carmodagama@gmail.com" className="solid-button inline-block">
-              Say Hello
+              {t.ctaHello}
             </a>
           </div>
 
