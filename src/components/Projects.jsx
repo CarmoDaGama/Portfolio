@@ -68,7 +68,7 @@ export default function Projects() {
                 : 'border border-[var(--color-line)] text-[var(--color-muted)] hover:text-[var(--color-text)]'
             }`}
           >
-            All
+            {t.filterAll}
           </button>
           {allTags.map((tag) => (
             <button
@@ -96,7 +96,7 @@ export default function Projects() {
                 className="glass-card grid gap-6 overflow-hidden border p-4 sm:p-6 lg:grid-cols-[1.12fr_0.88fr]"
               >
                 <div className="relative order-2 lg:order-1">
-                  <p className="mono-label mb-3">Featured Project</p>
+                  <p className="mono-label mb-3">{t.featuredProject}</p>
                   <h3 className="text-2xl font-semibold text-[var(--color-text)]">{project.name}</h3>
 
                   <div className="mt-4 rounded-lg border border-[var(--color-line)] bg-[color:color-mix(in_srgb,var(--color-surface)_82%,transparent)] p-4">
@@ -132,7 +132,7 @@ export default function Projects() {
                           onClick={() => togglePassword(key)}
                           className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-accent)]"
                         >
-                          {isPasswordVisible ? 'Hide' : 'Show'}
+                          {isPasswordVisible ? t.hide : t.show}
                         </button>
                       </div>
                     </div>
@@ -148,7 +148,7 @@ export default function Projects() {
                 <div className="order-1 overflow-hidden rounded-xl border border-[var(--color-line)] lg:order-2">
                   <img
                     src={projectPreviews[project.id]}
-                    alt={`Preview do projeto ${project.name}`}
+                    alt={`${t.previewAlt} ${project.name}`}
                     loading="lazy"
                     decoding="async"
                     className="h-full min-h-[280px] w-full object-cover object-top"
@@ -161,7 +161,7 @@ export default function Projects() {
 
         {compactProjects.length > 0 && (
           <div className="mt-12">
-            <p className="mono-label mb-4">Other Projects</p>
+            <p className="mono-label mb-4">{t.otherProjects}</p>
             <div className="grid gap-4 md:grid-cols-2">
               {compactProjects.map((project) => {
                 const key = credentialKey(project);
@@ -172,7 +172,7 @@ export default function Projects() {
                     <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-lg border border-[var(--color-line)]">
                       <img
                         src={projectPreviews[project.id]}
-                        alt={`Preview do projeto ${project.name}`}
+                        alt={`${t.previewAlt} ${project.name}`}
                         loading="lazy"
                         decoding="async"
                         className="h-full w-full object-cover object-top"
@@ -206,7 +206,7 @@ export default function Projects() {
                           onClick={() => togglePassword(key)}
                           className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--color-accent)]"
                         >
-                          {isPasswordVisible ? 'Hide' : 'Show'}
+                          {isPasswordVisible ? t.hide : t.show}
                         </button>
                       </div>
                     </div>
