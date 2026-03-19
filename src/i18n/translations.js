@@ -269,7 +269,7 @@ export const translations = {
       welcome: 'Bem-vindo ao meu portfólio',
       titlePrefix: 'Olá, eu sou',
       introLabel: 'Ola, meu nome e',
-      buildLine: 'Eu construo coisas para a web.',
+      buildLine: 'Transformo ideias em experiências digitais para a web.',
       valueLine: 'Transformando problemas complexos em sistemas digitais confiaveis.',
       highlightPills: ['Fintech Platforms', 'Design de APIs', 'MVPs em 4 semanas'],
       role: 'Desenvolvedor Full-Stack',
