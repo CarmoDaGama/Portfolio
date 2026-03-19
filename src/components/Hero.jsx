@@ -1,5 +1,5 @@
 import { useLanguage } from '../context/LanguageContext';
-import heroPortrait from '../assets/hero.webp';
+import heroPortrait from '../assets/pfp.png';
 
 export default function Hero() {
   const { translations } = useLanguage();
