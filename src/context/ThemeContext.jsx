@@ -8,7 +8,7 @@ export const ThemeProvider = ({ children }) => {
     const stored = localStorage.getItem('theme');
     if (stored) return stored;
 
-    return 'light'; // Default to light
+    return 'dark'; // Default to light
   });
 
   useEffect(() => {
