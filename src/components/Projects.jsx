@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useLanguage } from '../context/LanguageContext';
 import tmicroPreview from '../assets/project-tmicro.webp';
 import trimedPreview from '../assets/project-trimed.webp';
@@ -49,6 +50,49 @@ export default function Projects() {
   };
 
   const credentialKey = (project) => `${project.id}-${project.name}`;
+
+  const modalContent = selectedProject ? (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 px-4 backdrop-blur-sm">
+      <div className="glass-card w-full max-w-md p-6">
+        <h3 className="text-xl font-semibold text-[var(--color-text)]">{t.modalTitle}</h3>
+        <p className="mt-2 text-sm text-[var(--color-muted)]">
+          {t.modalText} <span className="text-[var(--color-accent)]">{selectedProject.name}</span>
+        </p>
+
+        <div className="mt-5 space-y-3 rounded-lg border border-[var(--color-line)] p-4">
+          <div className="text-sm">
+            <span className="font-mono text-[var(--color-muted)]">{t.userLabel}: </span>
+            <code className="text-xs text-[var(--color-accent)]">
+              {selectedProject.user}
+            </code>
+          </div>
+          <div className="text-sm">
+            <span className="font-mono text-[var(--color-muted)]">{t.passwordLabel}: </span>
+            <code className="text-xs text-[var(--color-accent)]">
+              {selectedProject.password}
+            </code>
+          </div>
+        </div>
+
+        <div className="mt-6 flex gap-3">
+          <button
+            type="button"
+            onClick={handleCloseDemoPrompt}
+            className="outline-button flex-1 text-center"
+          >
+            {t.modalCancel}
+          </button>
+          <button
+            type="button"
+            onClick={handleProceedToDemo}
+            className="solid-button flex-1 text-center"
+          >
+            {t.modalProceed}
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <section id="projects" className="defer-render py-24">
@@ -224,48 +268,7 @@ export default function Projects() {
         )}
       </div>
 
-      {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 px-4 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-md p-6">
-            <h3 className="text-xl font-semibold text-[var(--color-text)]">{t.modalTitle}</h3>
-            <p className="mt-2 text-sm text-[var(--color-muted)]">
-              {t.modalText} <span className="text-[var(--color-accent)]">{selectedProject.name}</span>
-            </p>
-
-            <div className="mt-5 space-y-3 rounded-lg border border-[var(--color-line)] p-4">
-              <div className="text-sm">
-                <span className="font-mono text-[var(--color-muted)]">{t.userLabel}: </span>
-                <code className="text-xs text-[var(--color-accent)]">
-                  {selectedProject.user}
-                </code>
-              </div>
-              <div className="text-sm">
-                <span className="font-mono text-[var(--color-muted)]">{t.passwordLabel}: </span>
-                <code className="text-xs text-[var(--color-accent)]">
-                  {selectedProject.password}
-                </code>
-              </div>
-            </div>
-
-            <div className="mt-6 flex gap-3">
-              <button
-                type="button"
-                onClick={handleCloseDemoPrompt}
-                className="outline-button flex-1 text-center"
-              >
-                {t.modalCancel}
-              </button>
-              <button
-                type="button"
-                onClick={handleProceedToDemo}
-                className="solid-button flex-1 text-center"
-              >
-                {t.modalProceed}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {selectedProject && createPortal(modalContent, document.body)}
     </section>
   );
 }
