@@ -4,11 +4,13 @@ import { useLanguage } from '../context/LanguageContext';
 import tmicroPreview from '../assets/project-tmicro.webp';
 import trimedPreview from '../assets/project-trimed.webp';
 import zenixPreview from '../assets/project-zenix.webp';
+import anyconnectPreview from '../assets/project-anyconnect.png';
 
 const projectPreviews = {
   tmicro: tmicroPreview,
   trimed: trimedPreview,
   zenix: zenixPreview,
+  anyconnect: anyconnectPreview,
 };
 
 export default function Projects() {
