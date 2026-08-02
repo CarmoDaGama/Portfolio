@@ -183,6 +183,7 @@ export const translations = {
       userLabel: 'User',
       passwordLabel: 'Password',
       previewAlt: 'Project preview for',
+      caseStudy: 'Case study',
       items: [
         {
           id: 'tmicro',
@@ -441,6 +442,7 @@ export const translations = {
       userLabel: 'Utilizador',
       passwordLabel: 'Senha',
       previewAlt: 'Preview do projeto',
+      caseStudy: 'Estudo de caso',
       items: [
         {
           id: 'tmicro',

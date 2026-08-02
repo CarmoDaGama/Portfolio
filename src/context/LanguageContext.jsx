@@ -1,25 +1,15 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { translations } from '../i18n/translations';
+import { DEFAULT_LANGUAGE, persistLanguage } from '../lib/preferences';
 
-const LanguageContext = createContext(null);  
+const LanguageContext = createContext(null);
 
-const SUPPORTED_LANGUAGES = ['en', 'pt'];
-
-function getDefaultLanguage() {
-  const storedLanguage = localStorage.getItem('portfolio-language');
-  if (storedLanguage && SUPPORTED_LANGUAGES.includes(storedLanguage)) {
-    return storedLanguage;
-  }
-
-  return 'pt';
-}
-
-export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState(getDefaultLanguage);
+export function LanguageProvider({ children, initialLanguage = DEFAULT_LANGUAGE }) {
+  const [language, setLanguage] = useState(initialLanguage);
 
   useEffect(() => {
-    localStorage.setItem('portfolio-language', language);
+    persistLanguage(language);
     document.documentElement.lang = language;
   }, [language]);
 

@@ -10,7 +10,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { useLanguage } from './context/LanguageContext';
 
-function App() {
+function App({ initialTheme }) {
   const { translations } = useLanguage();
   const infoLabels = translations.contact.info;
 
@@ -59,7 +59,7 @@ function App() {
   ];
 
   return (
-    <ThemeProvider>
+    <ThemeProvider initialTheme={initialTheme}>
       <div className="relative overflow-x-clip">
         <div className="noise-overlay" aria-hidden="true" />
 

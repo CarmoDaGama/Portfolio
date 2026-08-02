@@ -1,20 +1,15 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { DEFAULT_THEME, persistTheme } from '../lib/preferences';
 
 const ThemeContext = createContext();
 
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    // Check localStorage first
-    const stored = localStorage.getItem('theme');
-    if (stored) return stored;
-
-    return 'dark'; // Default to light
-  });
+export const ThemeProvider = ({ children, initialTheme = DEFAULT_THEME }) => {
+  const [theme, setTheme] = useState(initialTheme);
 
   useEffect(() => {
-    localStorage.setItem('theme', theme);
+    persistTheme(theme);
     const root = document.documentElement;
-    
+
     if (theme === 'dark') {
       root.classList.add('dark');
       root.classList.remove('light');

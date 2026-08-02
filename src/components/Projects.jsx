@@ -13,8 +13,13 @@ const projectPreviews = {
   anyconnect: anyconnectPreview,
 };
 
+// Static, crawlable case-study page generated for each project at build time
+// (see scripts/prerender.mjs). Portuguese is the canonical locale, English lives under /en.
+const caseStudyHref = (language, id) =>
+  language === 'pt' ? `/projects/${id}/` : `/${language}/projects/${id}/`;
+
 export default function Projects() {
-  const { translations } = useLanguage();
+  const { language, translations } = useLanguage();
   const t = translations.projects;
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [selectedProject, setSelectedProject] = useState(null);
@@ -157,7 +162,8 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  <div className="mt-5 rounded-lg border border-[var(--color-line)] p-4">
+                  {/* data-nosnippet: the page is pre-rendered, keep demo logins out of search snippets */}
+                  <div className="mt-5 rounded-lg border border-[var(--color-line)] p-4" data-nosnippet>
                     <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-muted)]">
                       {t.credentials}
                     </p>
@@ -188,6 +194,9 @@ export default function Projects() {
                     <button type="button" onClick={() => handleOpenDemoPrompt(project)} className="solid-button">
                       {t.liveDemo}
                     </button>
+                    <a href={caseStudyHref(language, project.id)} className="outline-button">
+                      {t.caseStudy}
+                    </a>
                   </div>
                 </div>
 
@@ -236,7 +245,7 @@ export default function Projects() {
                       ))}
                     </div>
 
-                    <div className="mt-4 rounded border border-[var(--color-line)] p-3">
+                    <div className="mt-4 rounded border border-[var(--color-line)] p-3" data-nosnippet>
                       <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-muted)]">
                         {t.userLabel}: <span className="text-[var(--color-accent)]">{project.user}</span>
                       </p>
@@ -257,10 +266,13 @@ export default function Projects() {
                       </div>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 flex flex-wrap gap-3">
                       <button type="button" onClick={() => handleOpenDemoPrompt(project)} className="solid-button">
                         {t.liveDemo}
                       </button>
+                      <a href={caseStudyHref(language, project.id)} className="outline-button">
+                        {t.caseStudy}
+                      </a>
                     </div>
                   </article>
                 );
