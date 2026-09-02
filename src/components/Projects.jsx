@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { useDemoStatus } from '../hooks/useDemoStatus';
+import { DEMO_STATUS } from '../lib/demoStatus';
 import tmicroPreview from '../assets/project-tmicro.webp';
 import trimedPreview from '../assets/project-trimed.webp';
 import zenixPreview from '../assets/project-zenix.webp';
@@ -18,12 +20,46 @@ const projectPreviews = {
 const caseStudyHref = (language, id) =>
   language === 'pt' ? `/projects/${id}/` : `/${language}/projects/${id}/`;
 
+const statusTone = {
+  [DEMO_STATUS.CHECKING]: { dot: 'bg-[var(--color-muted)] animate-pulse', text: 'text-[var(--color-muted)]' },
+  [DEMO_STATUS.ONLINE]: { dot: 'bg-emerald-400 shadow-[0_0_0_3px_rgba(52,211,153,0.18)]', text: 'text-emerald-400' },
+  [DEMO_STATUS.OFFLINE]: { dot: 'bg-rose-400', text: 'text-rose-400' },
+};
+
+function DemoStatusBadge({ status, t }) {
+  const tone = statusTone[status] ?? statusTone[DEMO_STATUS.CHECKING];
+  const label = {
+    [DEMO_STATUS.CHECKING]: t.statusChecking,
+    [DEMO_STATUS.ONLINE]: t.statusOnline,
+    [DEMO_STATUS.OFFLINE]: t.statusOffline,
+  }[status];
+  const hint = {
+    [DEMO_STATUS.CHECKING]: t.statusCheckingHint,
+    [DEMO_STATUS.ONLINE]: t.statusOnlineHint,
+    [DEMO_STATUS.OFFLINE]: t.statusOfflineHint,
+  }[status];
+
+  return (
+    <span
+      title={hint}
+      aria-live="polite"
+      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-line)] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] ${tone.text}`}
+    >
+      {label}
+    </span>
+  );
+}
+
 export default function Projects() {
   const { language, translations } = useLanguage();
   const t = translations.projects;
   const [visiblePasswords, setVisiblePasswords] = useState({});
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedTag, setSelectedTag] = useState(null);
+
+  // Availability of every demo link, probed once per session when the page loads.
+  const demoStatuses = useDemoStatus(t.items.map((project) => project.url));
+  const statusOf = (project) => demoStatuses[project.url] ?? DEMO_STATUS.CHECKING;
 
   // Get all unique tags from projects
   const allTags = Array.from(
@@ -148,7 +184,10 @@ export default function Projects() {
               >
                 <div className="relative order-2 lg:order-1">
                   <p className="mono-label mb-3">{t.featuredProject}</p>
-                  <h3 className="text-2xl font-semibold text-[var(--color-text)]">{project.name}</h3>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h3 className="text-2xl font-semibold text-[var(--color-text)]">{project.name}</h3>
+                    <DemoStatusBadge status={statusOf(project)} t={t} />
+                  </div>
 
                   <div className="mt-4 rounded-lg border border-[var(--color-line)] bg-[color:color-mix(in_srgb,var(--color-surface)_82%,transparent)] p-4">
                     <p className="text-sm leading-relaxed text-[var(--color-muted)]">{project.description}</p>
@@ -191,7 +230,13 @@ export default function Projects() {
                   </div>
 
                   <div className="mt-5 flex flex-wrap gap-3">
-                    <button type="button" onClick={() => handleOpenDemoPrompt(project)} className="solid-button">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenDemoPrompt(project)}
+                      disabled={statusOf(project) === DEMO_STATUS.OFFLINE}
+                      title={statusOf(project) === DEMO_STATUS.OFFLINE ? t.statusOfflineHint : undefined}
+                      className="solid-button disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
+                    >
                       {t.liveDemo}
                     </button>
                     <a href={caseStudyHref(language, project.id)} className="outline-button">
@@ -234,7 +279,10 @@ export default function Projects() {
                       />
                     </div>
 
-                    <h3 className="text-lg font-semibold text-[var(--color-text)]">{project.name}</h3>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-lg font-semibold text-[var(--color-text)]">{project.name}</h3>
+                      <DemoStatusBadge status={statusOf(project)} t={t} />
+                    </div>
                     <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{project.description}</p>
 
                     <div className="mt-3 flex flex-wrap gap-2">
@@ -267,7 +315,13 @@ export default function Projects() {
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-3">
-                      <button type="button" onClick={() => handleOpenDemoPrompt(project)} className="solid-button">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenDemoPrompt(project)}
+                        disabled={statusOf(project) === DEMO_STATUS.OFFLINE}
+                        title={statusOf(project) === DEMO_STATUS.OFFLINE ? t.statusOfflineHint : undefined}
+                        className="solid-button disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
+                      >
                         {t.liveDemo}
                       </button>
                       <a href={caseStudyHref(language, project.id)} className="outline-button">

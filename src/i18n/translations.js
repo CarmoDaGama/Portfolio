@@ -184,6 +184,12 @@ export const translations = {
       passwordLabel: 'Password',
       previewAlt: 'Project preview for',
       caseStudy: 'Case study',
+      statusChecking: 'Checking...',
+      statusOnline: 'Live',
+      statusOffline: 'Currently unavailable',
+      statusCheckingHint: 'Checking whether this demo is reachable',
+      statusOnlineHint: 'This demo answered the last availability check',
+      statusOfflineHint: 'This demo did not answer the last availability check',
       items: [
         {
           id: 'tmicro',
@@ -207,7 +213,7 @@ export const translations = {
           id: 'zenix',
           name: 'Vendas Zenix',
           description: 'Problem: Businesses struggled with fragmented accounting and invoicing systems—data silos, manual reconciliation errors, compliance risks. Solution: Built a unified API-first platform integrating entities, products, taxes, invoicing, and financial reconciliation with automatic compliance (SAFT export, multi-tenant support). My Role: Architected domain-driven design backend in NestJS, designed RBAC access control, optimized database queries for high-throughput environments (Redis caching), and led DevOps setup (Docker, CI/CD). Results: Enterprise deployment with many companies, processing many invoices weekly, 30% reduction in accounting time, full audit compliance. Tech Stack: NestJS, TypeScript, PostgreSQL, Redis, Docker, CI/CD (Azure DevOps).',
-          url: 'https://vendas.zenix.ao/',
+          url: 'https://express.zenix.ao/',
           tags: ['NestJS', 'PostgreSQL', 'DevOps'],
           user: 'admin@kivemba.com',
           password: 'admin123',
@@ -443,6 +449,12 @@ export const translations = {
       passwordLabel: 'Senha',
       previewAlt: 'Preview do projeto',
       caseStudy: 'Estudo de caso',
+      statusChecking: 'A verificar...',
+      statusOnline: 'No ar',
+      statusOffline: 'Indisponível no momento',
+      statusCheckingHint: 'A verificar se esta demo está acessível',
+      statusOnlineHint: 'Esta demo respondeu à última verificação de disponibilidade',
+      statusOfflineHint: 'Esta demo não respondeu à última verificação de disponibilidade',
       items: [
         {
           id: 'tmicro',
@@ -466,7 +478,7 @@ export const translations = {
           id: 'zenix',
           name: 'Zenix',
           description: 'Problema: Empresas lutavam com sistemas fragmentados de contabilidade e faturação—silos de dados, erros de reconciliação manual, riscos de conformidade. Solução: Construí plataforma unificada API-first integrando entidades, produtos, impostos, faturação, e reconciliação financeira com conformidade automática (exportação SAFT, suporte multi-tenant). Meu papel: Arquitectei backend orientado a design de domínio em NestJS, desenhei controlo de acesso RBAC, otimizei queries de base de dados para ambientes de alto volume (caching Redis), e liderei setup DevOps (Docker, CI/CD). Resultados: Deployment empresarial com muitas empresas, processando muitas faturas semanais, 30% redução em tempo de contabilidade, conformidade auditoria completa. Stack: NestJS, TypeScript, PostgreSQL, Redis, Docker, CI/CD (Azure DevOps).',
-          url: 'https://vendas.zenix.ao/',
+          url: 'https://express.zenix.ao/',
           tags: ['NestJS', 'PostgreSQL', 'DevOps'],
           user: 'admin@kivemba.com',
           password: 'admin123',
