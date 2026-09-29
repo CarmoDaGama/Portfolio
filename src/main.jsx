@@ -3,23 +3,24 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { LanguageProvider } from './context/LanguageContext.jsx'
-import { readStoredLanguage, readStoredTheme } from './lib/preferences.js'
+import { readStoredTheme } from './lib/preferences.js'
+import { languageFromPath } from './lib/routes.js'
 
 const container = document.getElementById('root')
-const language = readStoredLanguage()
+const language = languageFromPath(window.location.pathname)
 const theme = readStoredTheme()
 
 const tree = (
   <StrictMode>
-    <LanguageProvider initialLanguage={language}>
+    <LanguageProvider language={language}>
       <App initialTheme={theme} />
     </LanguageProvider>
   </StrictMode>
 )
 
-// The build pre-renders the page with a fixed language/theme (see scripts/prerender.mjs).
-// Hydrate only when the visitor's stored preferences match that markup; otherwise render
-// from scratch so a different language/theme never produces a hydration mismatch.
+// The build pre-renders one page per language (see scripts/prerender.mjs). The language
+// always matches, because both sides read it from the same URL; the theme is a stored
+// preference, so hydrate only when it matches the markup and render fresh otherwise.
 const prerenderedLanguage = container.dataset.prerenderLanguage
 const prerenderedTheme = container.dataset.prerenderTheme
 const canHydrate =

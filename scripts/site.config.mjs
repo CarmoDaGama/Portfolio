@@ -1,3 +1,5 @@
+export { homePath, projectPath } from '../src/lib/routes.js';
+
 export const SITE_URL = 'https://carmodagama.dev';
 
 // Language the pre-rendered `/` markup is generated in. Must match DEFAULT_LANGUAGE
@@ -45,7 +47,7 @@ export const COPY = {
     tagline: 'Backend & Full-Stack · Node.js/NestJS · TypeScript · PostgreSQL',
     projectsHeading: 'Projeto',
     stack: 'Stack',
-    liveSite: 'Ver plataforma',
+    liveSite: 'Ver site',
     viewRepo: 'Ver no GitHub',
     backHome: 'Voltar ao portfólio',
     caseStudy: 'Estudo de caso',
@@ -59,7 +61,7 @@ export const COPY = {
     tagline: 'Backend & Full-Stack · Node.js/NestJS · TypeScript · PostgreSQL',
     projectsHeading: 'Project',
     stack: 'Stack',
-    liveSite: 'Open platform',
+    liveSite: 'Visit site',
     viewRepo: 'View on GitHub',
     backHome: 'Back to portfolio',
     caseStudy: 'Case study',
@@ -69,7 +71,27 @@ export const COPY = {
   },
 };
 
-/** `/projects/<id>/` for pt (the canonical locale) and `/en/projects/<id>/` for en. */
-export function projectPath(language, id) {
-  return language === PRERENDER_LANGUAGE ? `/projects/${id}/` : `/${language}/projects/${id}/`;
-}
+/**
+ * Head content that differs between the two home pages. Everything else in
+ * index.html is language-neutral and is reused as-is.
+ */
+export const HOME_META = {
+  pt: {
+    lang: 'pt',
+    title: 'Carmo Da Gama – Backend & Full-Stack Developer (Node.js/NestJS, TypeScript)',
+    description:
+      'Portfólio de Carmo Da Gama, desenvolvedor backend com cerca de 7 anos em Node.js/NestJS, TypeScript e PostgreSQL. Plataformas de faturação certificadas pela AGT, integrações bancárias e sistemas críticos em produção em Luanda, Angola.',
+    ogTitle: 'Carmo Da Gama – Backend & Full-Stack Developer',
+    ogDescription:
+      'Cerca de 7 anos a construir plataformas de faturação, pagamentos e crédito com Node.js/NestJS, TypeScript e PostgreSQL.',
+  },
+  en: {
+    lang: 'en',
+    title: 'Carmo Da Gama – Backend & Full-Stack Developer (Node.js/NestJS, TypeScript)',
+    description:
+      "Carmo Da Gama's portfolio: a backend developer with around 7 years in Node.js/NestJS, TypeScript and PostgreSQL. AGT-certified billing platforms, banking integrations and critical systems in production in Luanda, Angola.",
+    ogTitle: 'Carmo Da Gama – Backend & Full-Stack Developer',
+    ogDescription:
+      'Around 7 years building billing, payment and credit platforms with Node.js/NestJS, TypeScript and PostgreSQL.',
+  },
+};

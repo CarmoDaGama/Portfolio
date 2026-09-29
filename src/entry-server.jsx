@@ -10,7 +10,7 @@ import { DEFAULT_LANGUAGE, DEFAULT_THEME } from './lib/preferences.js';
  */
 export function render({ language = DEFAULT_LANGUAGE, theme = DEFAULT_THEME } = {}) {
   return renderToString(
-    <LanguageProvider initialLanguage={language}>
+    <LanguageProvider language={language}>
       <App initialTheme={theme} />
     </LanguageProvider>,
   );

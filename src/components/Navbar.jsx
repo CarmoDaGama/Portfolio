@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { pathForLanguage } from '../lib/routes';
 import { useTheme } from '../context/ThemeContext';
 
 const navLinks = [
@@ -12,7 +13,8 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const { language, setLanguage, translations } = useLanguage();
+  const { language, translations } = useLanguage();
+  const pathname = typeof window === 'undefined' ? '/' : window.location.pathname;
   const { theme, toggleTheme } = useTheme();
   const t = translations.nav;
 
@@ -48,8 +50,17 @@ export default function Navbar() {
     }
   };
 
-  const handleLanguageChange = (nextLanguage) => {
-    setLanguage(nextLanguage);
+  // Switching language is a navigation to the other locale's URL, so the address
+  // stays shareable and the choice survives a reload. The href is what crawlers and
+  // no-JS visitors follow; the click handler only carries the current section across
+  // so the reader keeps their place on the page.
+  const languageHref = (nextLanguage) => pathForLanguage(nextLanguage, pathname);
+
+  const handleLanguageClick = (event, nextLanguage) => {
+    if (typeof window === 'undefined' || !window.location.hash) return;
+
+    event.preventDefault();
+    window.location.assign(languageHref(nextLanguage) + window.location.hash);
   };
 
   return (
@@ -131,28 +142,34 @@ export default function Navbar() {
             </button>
 
             <div className="hidden items-center rounded border border-[var(--color-line)] p-1 md:flex">
-              <button
+              <a
+                href={languageHref('en')}
+                hrefLang="en"
+                onClick={(event) => handleLanguageClick(event, 'en')}
+                aria-current={language === 'en' ? 'true' : undefined}
                 className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
                   language === 'en'
                     ? 'bg-[var(--color-accent)] text-white'
                     : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
-                onClick={() => handleLanguageChange('en')}
                 aria-label={`${t.toggleLanguage}: ${t.languageEnglish}`}
               >
                 EN
-              </button>
-              <button
+              </a>
+              <a
+                href={languageHref('pt')}
+                hrefLang="pt"
+                onClick={(event) => handleLanguageClick(event, 'pt')}
+                aria-current={language === 'pt' ? 'true' : undefined}
                 className={`px-3 py-1 text-xs font-semibold rounded-md transition-colors ${
                   language === 'pt'
                     ? 'bg-[var(--color-accent)] text-white'
                     : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
-                onClick={() => handleLanguageChange('pt')}
                 aria-label={`${t.toggleLanguage}: ${t.languagePortuguese}`}
               >
                 PT
-              </button>
+              </a>
             </div>
           </div>
 
@@ -227,28 +244,34 @@ export default function Navbar() {
             </a>
 
             <div className="flex items-center gap-2 px-4 pt-3">
-              <button
+              <a
+                href={languageHref('en')}
+                hrefLang="en"
+                onClick={(event) => handleLanguageClick(event, 'en')}
+                aria-current={language === 'en' ? 'true' : undefined}
                 className={`rounded px-3 py-1 text-xs font-semibold transition-colors ${
                   language === 'en'
                     ? 'bg-[var(--color-accent)] text-white'
                     : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
-                onClick={() => handleLanguageChange('en')}
                 aria-label={`${t.toggleLanguage}: ${t.languageEnglish}`}
               >
                 EN
-              </button>
-              <button
+              </a>
+              <a
+                href={languageHref('pt')}
+                hrefLang="pt"
+                onClick={(event) => handleLanguageClick(event, 'pt')}
+                aria-current={language === 'pt' ? 'true' : undefined}
                 className={`rounded px-3 py-1 text-xs font-semibold transition-colors ${
                   language === 'pt'
                     ? 'bg-[var(--color-accent)] text-white'
                     : 'text-[var(--color-muted)] hover:text-[var(--color-text)]'
                 }`}
-                onClick={() => handleLanguageChange('pt')}
                 aria-label={`${t.toggleLanguage}: ${t.languagePortuguese}`}
               >
                 PT
-              </button>
+              </a>
             </div>
           </div>
         </div>

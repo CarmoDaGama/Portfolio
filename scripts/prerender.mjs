@@ -17,6 +17,8 @@ import { translations } from '../src/i18n/translations.js';
 import {
   COPY,
   PERSON,
+  HOME_META,
+  homePath,
   PRERENDER_LANGUAGE,
   PRERENDER_THEME,
   SITE_URL,
@@ -236,8 +238,8 @@ function renderProjectPage({ project, language, alternate }) {
   </head>
   <body>
     <nav>
-      <a href="/">← ${escapeHtml(copy.backHome)}</a>
-      <a href="/#projects">${escapeHtml(copy.allProjects)}</a>
+      <a href="${homePath(language)}">← ${escapeHtml(copy.backHome)}</a>
+      <a href="${homePath(language)}#projects">${escapeHtml(copy.allProjects)}</a>
       <a href="${alternate.url}" hreflang="${alternate.language}">${escapeHtml(copy.switchLanguage)}</a>
     </nav>
 
@@ -255,7 +257,7 @@ function renderProjectPage({ project, language, alternate }) {
 
       <div class="actions">
         ${projectLink(project, copy)}
-        <a href="/#projects">${escapeHtml(copy.allProjects)}</a>
+        <a href="${homePath(language)}#projects">${escapeHtml(copy.allProjects)}</a>
       </div>
     </main>
 
@@ -272,8 +274,51 @@ function renderProjectPage({ project, language, alternate }) {
 `;
 }
 
-function buildHomeJsonLd() {
-  const projects = translations[PRERENDER_LANGUAGE].projects.items;
+/**
+ * The Vite template is written in the canonical locale; every other language reuses
+ * it with the head swapped, so the two home pages can never drift apart in markup.
+ */
+function renderHome({ template, language, render }) {
+  const meta = HOME_META[language];
+  const canonical = absolute(homePath(language));
+  const appHtml = render({ language, theme: PRERENDER_THEME });
+
+  let html = template;
+
+  const replace = (from, to) => {
+    if (!html.includes(from)) {
+      throw new Error(`index.html no longer contains: ${from}`);
+    }
+    html = html.replace(from, to);
+  };
+
+  replace(`<html lang="${HOME_META[PRERENDER_LANGUAGE].lang}">`, `<html lang="${meta.lang}">`);
+  replace(`<title>${HOME_META[PRERENDER_LANGUAGE].title}</title>`, `<title>${meta.title}</title>`);
+  replace(HOME_META[PRERENDER_LANGUAGE].description, meta.description);
+  replace(`content="${COPY[PRERENDER_LANGUAGE].ogLocale}"`, `content="${COPY[language].ogLocale}"`);
+  replace(
+    `<link rel="canonical" href="${absolute(homePath(PRERENDER_LANGUAGE))}" />`,
+    `<link rel="canonical" href="${canonical}" />`,
+  );
+  replace(
+    `<meta property="og:url" content="${absolute(homePath(PRERENDER_LANGUAGE))}" />`,
+    `<meta property="og:url" content="${canonical}" />`,
+  );
+
+  // og:description and twitter:description carry the same sentence.
+  html = html.split(HOME_META[PRERENDER_LANGUAGE].ogDescription).join(meta.ogDescription);
+
+  html = html.replace(
+    '<div id="root"></div>',
+    `<div id="root" data-prerender-language="${language}" data-prerender-theme="${PRERENDER_THEME}">${appHtml}</div>`,
+  );
+
+  return html.replace('</head>', `  ${buildHomeJsonLd(language)}\n  </head>`);
+}
+
+function buildHomeJsonLd(language) {
+  const projects = translations[language].projects.items;
+  const homeUrl = absolute(homePath(language));
 
   const person = {
     '@context': 'https://schema.org',
@@ -283,7 +328,7 @@ function buildHomeJsonLd() {
     givenName: PERSON.givenName,
     familyName: PERSON.familyName,
     jobTitle: PERSON.jobTitle,
-    url: `${SITE_URL}/`,
+    url: homeUrl,
     email: `mailto:${PERSON.email}`,
     telephone: PERSON.telephone,
     image: absolute('/og/home.png'),
@@ -300,27 +345,27 @@ function buildHomeJsonLd() {
   const website = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    '@id': `${SITE_URL}/#website`,
-    url: `${SITE_URL}/`,
+    '@id': `${homeUrl}#website`,
+    url: homeUrl,
     name: `${PERSON.name} – ${PERSON.jobTitle}`,
-    inLanguage: COPY[PRERENDER_LANGUAGE].localeTag,
+    inLanguage: COPY[language].localeTag,
     author: { '@id': `${SITE_URL}/#person` },
   };
 
   const portfolio = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: translations[PRERENDER_LANGUAGE].projects.title,
+    name: translations[language].projects.title,
     itemListElement: projects.map((project, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       item: {
         '@type': 'SoftwareApplication',
         name: project.name,
-        url: absolute(projectPath(PRERENDER_LANGUAGE, project.id)),
+        url: absolute(projectPath(language, project.id)),
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'Web',
-        description: metaDescription(project, PRERENDER_LANGUAGE),
+        description: metaDescription(project, language),
         keywords: project.tags.join(', '),
         author: { '@id': `${SITE_URL}/#person` },
       },
@@ -334,7 +379,10 @@ function buildHomeJsonLd() {
 
 function buildSitemap(projects) {
   const today = new Date().toISOString().slice(0, 10);
-  const urls = [{ loc: `${SITE_URL}/`, priority: '1.0' }];
+  const urls = ['pt', 'en'].map((language) => ({
+    loc: absolute(homePath(language)),
+    priority: language === PRERENDER_LANGUAGE ? '1.0' : '0.9',
+  }));
 
   for (const project of projects) {
     for (const language of ['pt', 'en']) {
@@ -374,22 +422,22 @@ async function main() {
 
   const { render } = await import(pathToFileURL(path.join(ssrDir, 'entry-server.js')).href);
 
-  console.log('› pre-rendering /');
-  const appHtml = render({ language: PRERENDER_LANGUAGE, theme: PRERENDER_THEME });
-
   const indexPath = path.join(distDir, 'index.html');
-  let html = await fs.readFile(indexPath, 'utf8');
+  const template = await fs.readFile(indexPath, 'utf8');
 
-  if (!html.includes('<div id="root"></div>')) {
+  if (!template.includes('<div id="root"></div>')) {
     throw new Error('dist/index.html does not contain an empty <div id="root"></div> to fill.');
   }
 
-  html = html.replace(
-    '<div id="root"></div>',
-    `<div id="root" data-prerender-language="${PRERENDER_LANGUAGE}" data-prerender-theme="${PRERENDER_THEME}">${appHtml}</div>`,
-  );
-  html = html.replace('</head>', `  ${buildHomeJsonLd()}\n  </head>`);
-  await fs.writeFile(indexPath, html, 'utf8');
+  for (const language of ['pt', 'en']) {
+    const pathname = homePath(language);
+    console.log(`› pre-rendering ${pathname}`);
+
+    const html = renderHome({ template, language, render });
+    const outDir = path.join(distDir, pathname);
+    await fs.mkdir(outDir, { recursive: true });
+    await fs.writeFile(path.join(outDir, 'index.html'), html, 'utf8');
+  }
 
   const projects = translations[PRERENDER_LANGUAGE].projects.items;
 
@@ -416,7 +464,7 @@ async function main() {
   await fs.writeFile(path.join(distDir, 'sitemap.xml'), buildSitemap(projects), 'utf8');
   await fs.rm(ssrDir, { recursive: true, force: true });
 
-  console.log(`✓ pre-rendered 1 + ${projects.length * 2} pages`);
+  console.log(`✓ pre-rendered 2 + ${projects.length * 2} pages`);
 }
 
 main().catch((error) => {
