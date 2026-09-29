@@ -27,6 +27,13 @@ const projectSources = {
   trimed: 'src/assets/project-trimed.webp',
   zenix: 'src/assets/project-zenix.webp',
   anyconnect: 'src/assets/project-anyconnect.png',
+  kandonga: 'src/assets/project-kandonga.en.png',
+  infrawatch: 'src/assets/project-infrawatch.en.png',
+  myhealth: 'src/assets/project-myhealth.en.png',
+  smcuango: 'src/assets/project-smcuango.en.png',
+  smchitotolo: 'src/assets/project-smchitotolo.en.png',
+  projectolola: 'src/assets/project-projectolola.en.png',
+  bec: 'src/assets/project-bec.en.png',
 };
 
 const escapeXml = (value) =>
@@ -58,9 +65,9 @@ function homeCardSvg() {
     ${backdrop}
     <text x="80" y="180" font-family="${FONT}" font-size="26" letter-spacing="6" fill="${ACCENT}">CARMODAGAMA.DEV</text>
     <text x="80" y="290" font-family="${FONT}" font-size="86" font-weight="700" fill="${TEXT}">Carmo Da Gama</text>
-    <text x="80" y="356" font-family="${FONT}" font-size="40" font-weight="600" fill="${MUTED}">Full-Stack Developer</text>
-    <text x="80" y="440" font-family="${FONT}" font-size="28" fill="${MUTED}">React · Node.js / NestJS · Laravel · PostgreSQL</text>
-    <text x="80" y="492" font-family="${FONT}" font-size="28" fill="${MUTED}">6+ anos · Fintech, APIs e sistemas críticos · Luanda, AO</text>
+    <text x="80" y="356" font-family="${FONT}" font-size="40" font-weight="600" fill="${MUTED}">Backend &amp; Full-Stack Developer</text>
+    <text x="80" y="440" font-family="${FONT}" font-size="28" fill="${MUTED}">Node.js / NestJS · TypeScript · PostgreSQL · React</text>
+    <text x="80" y="492" font-family="${FONT}" font-size="28" fill="${MUTED}">7 anos · Fintech, faturação e sistemas críticos · Luanda, AO</text>
     <rect x="80" y="540" width="120" height="4" rx="2" fill="${ACCENT}" />
   </svg>`;
 }
@@ -95,7 +102,8 @@ async function generateHomeCard() {
 async function generateProjectCard(project) {
   const source = projectSources[project.id];
   if (!source) {
-    console.warn(`! no preview image mapped for project "${project.id}", skipping`);
+    await sharp(Buffer.from(projectCardSvg(project))).png().toFile(resolve(outputDir, `${project.id}.png`));
+    console.log(`› public/og/${project.id}.png (text only, no artwork mapped)`);
     return;
   }
 

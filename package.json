@@ -9,6 +9,7 @@
     "build:spa": "vite build",
     "optimize:images": "node scripts/optimize-images.mjs",
     "generate:og": "node scripts/generate-og-images.mjs",
+    "generate:covers": "node scripts/generate-project-covers.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

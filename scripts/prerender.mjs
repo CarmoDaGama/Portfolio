@@ -86,6 +86,15 @@ function metaDescription(project, language) {
   return `${prefix}${text}`;
 }
 
+/** Primary link on a case-study page: the live site, the repository, or nothing. */
+function projectLink(project, copy) {
+  const href = project.url ?? project.repo;
+  if (!href) return '';
+
+  const label = project.url ? copy.liveSite : copy.viewRepo;
+  return `<a class="primary" href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`;
+}
+
 function renderProjectPage({ project, language, alternate }) {
   const copy = COPY[language];
   const t = translations[language].projects;
@@ -106,7 +115,7 @@ function renderProjectPage({ project, language, alternate }) {
     image: ogImage,
     softwareRequirements: project.tags.join(', '),
     keywords: project.tags.join(', '),
-    sameAs: [project.url],
+    sameAs: [project.url ?? project.repo].filter(Boolean),
     author: {
       '@type': 'Person',
       name: PERSON.name,
@@ -245,7 +254,7 @@ function renderProjectPage({ project, language, alternate }) {
       ${sectionsHtml}
 
       <div class="actions">
-        <a class="primary" href="${escapeHtml(project.url)}" target="_blank" rel="noopener">${escapeHtml(copy.liveSite)}</a>
+        ${projectLink(project, copy)}
         <a href="/#projects">${escapeHtml(copy.allProjects)}</a>
       </div>
     </main>

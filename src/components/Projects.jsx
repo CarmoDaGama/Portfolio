@@ -7,6 +7,20 @@ import tmicroPreview from '../assets/project-tmicro.webp';
 import trimedPreview from '../assets/project-trimed.webp';
 import zenixPreview from '../assets/project-zenix.webp';
 import anyconnectPreview from '../assets/project-anyconnect.png';
+import kandongaPreview from '../assets/project-kandonga.png';
+import kandongaPreviewEn from '../assets/project-kandonga.en.png';
+import infrawatchPreview from '../assets/project-infrawatch.png';
+import infrawatchPreviewEn from '../assets/project-infrawatch.en.png';
+import myhealthPreview from '../assets/project-myhealth.png';
+import myhealthPreviewEn from '../assets/project-myhealth.en.png';
+import smcuangoPreview from '../assets/project-smcuango.png';
+import smcuangoPreviewEn from '../assets/project-smcuango.en.png';
+import smchitotoloPreview from '../assets/project-smchitotolo.png';
+import smchitotoloPreviewEn from '../assets/project-smchitotolo.en.png';
+import projectololaPreview from '../assets/project-projectolola.png';
+import projectololaPreviewEn from '../assets/project-projectolola.en.png';
+import becPreview from '../assets/project-bec.png';
+import becPreviewEn from '../assets/project-bec.en.png';
 
 const projectPreviews = {
   tmicro: tmicroPreview,
@@ -14,6 +28,28 @@ const projectPreviews = {
   zenix: zenixPreview,
   anyconnect: anyconnectPreview,
 };
+
+// Projects with no product screenshot use generated artwork (see
+// scripts/generate-project-covers.mjs). The artwork carries the project name and
+// strapline, so there is one per language, and it is composed rather than cropped:
+// it gets letterboxed against its own background instead of being covered.
+const generatedCovers = {
+  kandonga: { pt: kandongaPreview, en: kandongaPreviewEn },
+  infrawatch: { pt: infrawatchPreview, en: infrawatchPreviewEn },
+  myhealth: { pt: myhealthPreview, en: myhealthPreviewEn },
+  smcuango: { pt: smcuangoPreview, en: smcuangoPreviewEn },
+  smchitotolo: { pt: smchitotoloPreview, en: smchitotoloPreviewEn },
+  projectolola: { pt: projectololaPreview, en: projectololaPreviewEn },
+  bec: { pt: becPreview, en: becPreviewEn },
+};
+
+const previewSrc = (project, language) =>
+  generatedCovers[project.id]?.[language] ?? projectPreviews[project.id];
+
+const previewClass = (project) =>
+  generatedCovers[project.id]
+    ? 'h-full w-full bg-[#060b17] object-contain'
+    : 'h-full w-full object-cover object-top';
 
 // Static, crawlable case-study page generated for each project at build time
 // (see scripts/prerender.mjs). Portuguese is the canonical locale, English lives under /en.
@@ -48,6 +84,54 @@ function DemoStatusBadge({ status, t }) {
       {label}
     </span>
   );
+}
+
+
+// The primary call to action depends on what the project actually offers: a demo
+// behind credentials opens the credentials modal, a public site or a repository is
+// a plain link, and work that is no longer reachable gets no action at all.
+function PrimaryAction({ project, status, t, onOpenDemo }) {
+  const isOffline = status === DEMO_STATUS.OFFLINE;
+
+  if (project.url && project.user) {
+    return (
+      <button
+        type="button"
+        onClick={() => onOpenDemo(project)}
+        disabled={isOffline}
+        title={isOffline ? t.statusOfflineHint : undefined}
+        className="solid-button disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
+      >
+        {t.liveDemo}
+      </button>
+    );
+  }
+
+  if (project.url) {
+    return (
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-disabled={isOffline || undefined}
+        onClick={isOffline ? (event) => event.preventDefault() : undefined}
+        title={isOffline ? t.statusOfflineHint : undefined}
+        className={`solid-button ${isOffline ? 'cursor-not-allowed opacity-50 hover:translate-y-0' : ''}`}
+      >
+        {t.visitSite}
+      </a>
+    );
+  }
+
+  if (project.repo) {
+    return (
+      <a href={project.repo} target="_blank" rel="noopener noreferrer" className="solid-button">
+        {t.viewRepo}
+      </a>
+    );
+  }
+
+  return null;
 }
 
 export default function Projects() {
@@ -186,7 +270,7 @@ export default function Projects() {
                   <p className="mono-label mb-3">{t.featuredProject}</p>
                   <div className="flex flex-wrap items-center gap-3">
                     <h3 className="text-2xl font-semibold text-[var(--color-text)]">{project.name}</h3>
-                    <DemoStatusBadge status={statusOf(project)} t={t} />
+                    {project.url && <DemoStatusBadge status={statusOf(project)} t={t} />}
                   </div>
 
                   <div className="mt-4 rounded-lg border border-[var(--color-line)] bg-[color:color-mix(in_srgb,var(--color-surface)_82%,transparent)] p-4">
@@ -202,6 +286,7 @@ export default function Projects() {
                   </div>
 
                   {/* data-nosnippet: the page is pre-rendered, keep demo logins out of search snippets */}
+                  {project.user && (
                   <div className="mt-5 rounded-lg border border-[var(--color-line)] p-4" data-nosnippet>
                     <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-muted)]">
                       {t.credentials}
@@ -228,17 +313,15 @@ export default function Projects() {
                       </div>
                     </div>
                   </div>
+                  )}
 
                   <div className="mt-5 flex flex-wrap gap-3">
-                    <button
-                      type="button"
-                      onClick={() => handleOpenDemoPrompt(project)}
-                      disabled={statusOf(project) === DEMO_STATUS.OFFLINE}
-                      title={statusOf(project) === DEMO_STATUS.OFFLINE ? t.statusOfflineHint : undefined}
-                      className="solid-button disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
-                    >
-                      {t.liveDemo}
-                    </button>
+                    <PrimaryAction
+                      project={project}
+                      status={statusOf(project)}
+                      t={t}
+                      onOpenDemo={handleOpenDemoPrompt}
+                    />
                     <a href={caseStudyHref(language, project.id)} className="outline-button">
                       {t.caseStudy}
                     </a>
@@ -247,11 +330,11 @@ export default function Projects() {
 
                 <div className="order-1 overflow-hidden rounded-xl border border-[var(--color-line)] lg:order-2">
                   <img
-                    src={projectPreviews[project.id]}
+                    src={previewSrc(project, language)}
                     alt={`${t.previewAlt} ${project.name}`}
                     loading="lazy"
                     decoding="async"
-                    className="h-full min-h-[280px] w-full object-cover object-top"
+                    className={`min-h-[280px] ${previewClass(project)}`}
                   />
                 </div>
               </article>
@@ -271,17 +354,17 @@ export default function Projects() {
                   <article key={project.id} className="glass-card p-5">
                     <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-lg border border-[var(--color-line)]">
                       <img
-                        src={projectPreviews[project.id]}
+                        src={previewSrc(project, language)}
                         alt={`${t.previewAlt} ${project.name}`}
                         loading="lazy"
                         decoding="async"
-                        className="h-full w-full object-cover object-top"
+                        className={previewClass(project)}
                       />
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2">
                       <h3 className="text-lg font-semibold text-[var(--color-text)]">{project.name}</h3>
-                      <DemoStatusBadge status={statusOf(project)} t={t} />
+                      {project.url && <DemoStatusBadge status={statusOf(project)} t={t} />}
                     </div>
                     <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">{project.description}</p>
 
@@ -293,6 +376,7 @@ export default function Projects() {
                       ))}
                     </div>
 
+                    {project.user && (
                     <div className="mt-4 rounded border border-[var(--color-line)] p-3" data-nosnippet>
                       <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-[var(--color-muted)]">
                         {t.userLabel}: <span className="text-[var(--color-accent)]">{project.user}</span>
@@ -313,17 +397,15 @@ export default function Projects() {
                         </button>
                       </div>
                     </div>
+                    )}
 
                     <div className="mt-4 flex flex-wrap gap-3">
-                      <button
-                        type="button"
-                        onClick={() => handleOpenDemoPrompt(project)}
-                        disabled={statusOf(project) === DEMO_STATUS.OFFLINE}
-                        title={statusOf(project) === DEMO_STATUS.OFFLINE ? t.statusOfflineHint : undefined}
-                        className="solid-button disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
-                      >
-                        {t.liveDemo}
-                      </button>
+                      <PrimaryAction
+                        project={project}
+                        status={statusOf(project)}
+                        t={t}
+                        onOpenDemo={handleOpenDemoPrompt}
+                      />
                       <a href={caseStudyHref(language, project.id)} className="outline-button">
                         {t.caseStudy}
                       </a>

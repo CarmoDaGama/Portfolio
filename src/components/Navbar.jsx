@@ -107,7 +107,7 @@ export default function Navbar() {
                 {t[link.key]}
               </a>
             ))}
-            <a href="#contact" onClick={(e) => handleLinkClick(e, '#contact')} className="outline-button ml-2 py-2">
+            <a href="/cv.pdf" target="_blank" rel="noopener noreferrer" className="outline-button ml-2 py-2">
               {t.resume}
             </a>
           </div>
@@ -218,8 +218,9 @@ export default function Navbar() {
             ))}
 
             <a
-              href="#contact"
-              onClick={(e) => handleLinkClick(e, '#contact')}
+              href="/cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block rounded px-4 py-2 text-sm font-mono text-[var(--color-accent)]"
             >
               {t.resume}

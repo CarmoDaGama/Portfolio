@@ -49,12 +49,7 @@ export default function Hero() {
             <button type="button" onClick={() => handleScroll('#contact')} className="solid-button">
               {t.ctaContact}
             </button>
-            <a
-              href="https://linkedin.com/in/carmodagama"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="outline-button"
-            >
+            <a href="/cv.pdf" target="_blank" rel="noopener noreferrer" className="outline-button">
               {t.ctaCv}
             </a>
           </div>
