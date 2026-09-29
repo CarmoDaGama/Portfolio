@@ -23,7 +23,7 @@ export const translations = {
       buildLine: 'I build reliable backends for financial and critical systems.',
       valueLine: 'Turning complex problems into reliable systems.',
       highlightPills: ['Backend & Integrations', 'Fintech', 'Critical Systems'],
-      role: 'Backend & Full-Stack Developer',
+      role: 'Full-Stack Developer',
       profileAlt: 'Portrait of Carmo Da Gama',
       experienceBadge: '7 years',
       description:
@@ -302,10 +302,10 @@ export const translations = {
       welcome: 'Bem-vindo ao meu portfólio',
       titlePrefix: 'Olá, eu sou',
       introLabel: 'Ola, meu nome e',
-      buildLine: 'Construo backends fiáveis para sistemas financeiros e críticos.',
+      buildLine: 'Construo Aplicações Web fiáveis para sistemas financeiros e críticos.',
       valueLine: 'Transformando problemas complexos em sistemas fiáveis.',
       highlightPills: ['Backend & Integrações', 'Fintech', 'Sistemas Críticos'],
-      role: 'Desenvolvedor Backend & Full-Stack',
+      role: 'Desenvolvedor Full-Stack',
       profileAlt: 'Retrato de Carmo Da Gama',
       experienceBadge: '7 anos',
       description:

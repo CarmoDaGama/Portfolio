@@ -11,7 +11,7 @@ export const PERSON = {
   name: 'Carmo Da Gama',
   givenName: 'Carmo',
   familyName: 'Da Gama',
-  jobTitle: 'Backend & Full-Stack Developer',
+  jobTitle: 'Full-Stack Developer',
   email: 'carmodagama@gmail.com',
   telephone: '+244928477942',
   locality: 'Luanda',
@@ -44,7 +44,7 @@ export const COPY = {
   pt: {
     localeTag: 'pt-PT',
     ogLocale: 'pt_PT',
-    tagline: 'Backend & Full-Stack · Node.js/NestJS · TypeScript · PostgreSQL',
+    tagline: 'Full-Stack · Node.js/NestJS · TypeScript · PostgreSQL',
     projectsHeading: 'Projeto',
     stack: 'Stack',
     liveSite: 'Ver site',
@@ -58,7 +58,7 @@ export const COPY = {
   en: {
     localeTag: 'en-US',
     ogLocale: 'en_US',
-    tagline: 'Backend & Full-Stack · Node.js/NestJS · TypeScript · PostgreSQL',
+    tagline: 'Full-Stack · Node.js/NestJS · TypeScript · PostgreSQL',
     projectsHeading: 'Project',
     stack: 'Stack',
     liveSite: 'Visit site',
@@ -78,19 +78,19 @@ export const COPY = {
 export const HOME_META = {
   pt: {
     lang: 'pt',
-    title: 'Carmo Da Gama – Backend & Full-Stack Developer (Node.js/NestJS, TypeScript)',
+    title: 'Carmo Da Gama – Full-Stack Developer (Node.js/NestJS, TypeScript)',
     description:
       'Portfólio de Carmo Da Gama, desenvolvedor backend com cerca de 7 anos em Node.js/NestJS, TypeScript e PostgreSQL. Plataformas de faturação certificadas pela AGT, integrações bancárias e sistemas críticos em produção em Luanda, Angola.',
-    ogTitle: 'Carmo Da Gama – Backend & Full-Stack Developer',
+    ogTitle: 'Carmo Da Gama – Full-Stack Developer',
     ogDescription:
       'Cerca de 7 anos a construir plataformas de faturação, pagamentos e crédito com Node.js/NestJS, TypeScript e PostgreSQL.',
   },
   en: {
     lang: 'en',
-    title: 'Carmo Da Gama – Backend & Full-Stack Developer (Node.js/NestJS, TypeScript)',
+    title: 'Carmo Da Gama – Full-Stack Developer (Node.js/NestJS, TypeScript)',
     description:
       "Carmo Da Gama's portfolio: a backend developer with around 7 years in Node.js/NestJS, TypeScript and PostgreSQL. AGT-certified billing platforms, banking integrations and critical systems in production in Luanda, Angola.",
-    ogTitle: 'Carmo Da Gama – Backend & Full-Stack Developer',
+    ogTitle: 'Carmo Da Gama – Full-Stack Developer',
     ogDescription:
       'Around 7 years building billing, payment and credit platforms with Node.js/NestJS, TypeScript and PostgreSQL.',
   },

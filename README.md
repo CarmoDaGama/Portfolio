@@ -1,6 +1,6 @@
 # Carmo Da Gama – Portfolio
 
-A modern, fully responsive portfolio website for **Carmo Da Gama**, a Backend & Full-Stack Developer specializing in Node.js/NestJS + TypeScript.
+A modern, fully responsive portfolio website for **Carmo Da Gama**, a Full-Stack Developer specializing in Node.js/NestJS + TypeScript.
 
 ## Tech Stack
 
