@@ -12,8 +12,6 @@ import smchitotoloPreview from '../assets/project-smchitotolo.webp';
 import becPreview from '../assets/project-bec.webp';
 import kandongaPreview from '../assets/project-kandonga.png';
 import kandongaPreviewEn from '../assets/project-kandonga.en.png';
-import projectololaPreview from '../assets/project-projectolola.png';
-import projectololaPreviewEn from '../assets/project-projectolola.en.png';
 
 const projectPreviews = {
   tmicro: tmicroPreview,
@@ -31,7 +29,6 @@ const projectPreviews = {
 // it gets letterboxed against its own background instead of being covered.
 const generatedCovers = {
   kandonga: { pt: kandongaPreview, en: kandongaPreviewEn },
-  projectolola: { pt: projectololaPreview, en: projectololaPreviewEn },
 };
 
 const previewSrc = (project, language) =>

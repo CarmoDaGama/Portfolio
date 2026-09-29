@@ -31,7 +31,6 @@ const projectSources = {
   smchitotolo: 'src/assets/project-smchitotolo.webp',
   bec: 'src/assets/project-bec.webp',
   kandonga: 'src/assets/project-kandonga.en.png',
-  projectolola: 'src/assets/project-projectolola.en.png',
 };
 
 const escapeXml = (value) =>

@@ -255,12 +255,6 @@ export const translations = {
           tags: ['WordPress', 'PHP', 'CMS'],
         },
         {
-          id: 'projectolola',
-          name: 'Projecto Lola',
-          description: 'Institutional website built in WordPress for Projecto Lola, with content managed by the team itself. My role: built the site, structured the pages and configured the publishing back office. Stack: WordPress, PHP, HTML/CSS, JavaScript.',
-          tags: ['WordPress', 'CMS'],
-        },
-        {
           id: 'bec',
           name: 'BEC',
           description: 'Corporate website built in WordPress for BEC, covering the company profile and its business lines — mining, services and trading — alongside a press area and contacts, with a Portuguese/English language switcher. My role: built the site, structured the pages and business-line sections, and configured the back office so the team could publish on its own. Stack: WordPress, PHP, HTML/CSS, JavaScript.',
@@ -558,12 +552,6 @@ export const translations = {
           description: 'Problema: a empresa precisava de um site institucional que desse conta tanto da operação mineira como do programa de responsabilidade social e ambiental, com uma navegação capaz de suportar vários níveis de conteúdo sem se tornar confusa. Solução: site em WordPress com árvore de navegação em vários níveis — quem somos, compromisso (responsabilidade social: educação, saúde, formação, cultura e lazer, agricultura; responsabilidade ambiental: educação ambiental, reflorestação), atividades, eventos e notícias — tudo editável por CMS, com seletor de idioma PT/EN. O meu papel: desenvolvimento do site, modelação da estrutura de conteúdos e integração no backoffice. Stack: WordPress, PHP, HTML/CSS, JavaScript.',
           url: 'https://smchitotolo.co.ao/',
           tags: ['WordPress', 'PHP', 'CMS'],
-        },
-        {
-          id: 'projectolola',
-          name: 'Projecto Lola',
-          description: 'Site institucional desenvolvido em WordPress para o Projecto Lola, com gestão de conteúdos pela própria equipa. O meu papel: desenvolvimento do site, estruturação das páginas e configuração do backoffice de publicação. Stack: WordPress, PHP, HTML/CSS, JavaScript.',
-          tags: ['WordPress', 'CMS'],
         },
         {
           id: 'bec',
