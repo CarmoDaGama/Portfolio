@@ -214,20 +214,6 @@ export const translations = {
           password: 'admin123',
         },
         {
-          id: 'infrawatch',
-          name: 'InfraWatch',
-          description: 'Problem: teams running infrastructure need to know something broke before the customer calls, and to separate who can look from who can act. Solution: a real-time monitoring platform with dashboards, metric-processing queues, alerting and role-based access control. My role: a Node.js/TypeScript backend using Redis for queues and ephemeral state, a React frontend for the dashboards, and Docker packaging for reproducible startup. Results: a personal project, developed in the open on GitHub. Stack: Node.js, TypeScript, React, Redis, Docker.',
-          repo: 'https://github.com/CarmoDaGama/InfraWatch',
-          tags: ['Node.js', 'TypeScript', 'React', 'Redis', 'Docker'],
-        },
-        {
-          id: 'myhealth',
-          name: 'Health Services Locator',
-          description: 'Problem: finding the nearest hospital, clinic, pharmacy, emergency unit or laboratory means knowing what exists before you need it — and in an emergency nobody has time to look it up. Solution: a cross-platform mobile app that puts nearby health services on an interactive map, with GPS location, search by name or type, service details, directions and a direct call, plus ratings, comments and favourites. Healthcare professionals can register a service, which an administrator reviews and approves before it goes live. My role: built the app end to end in React Native/Expo with TypeScript — Firebase (Authentication, Firestore, Storage) as the backend, OpenStreetMap with Leaflet for the mapping layer, Portuguese/English localisation with automatic device detection, and an admin dashboard for approvals, roles and action logs. Results: a personal project, developed in the open on GitHub, running entirely within Firebase free-tier limits. Stack: React Native, Expo, TypeScript, Firebase, OpenStreetMap/Leaflet.',
-          repo: 'https://github.com/CarmoDaGama/my-health-app',
-          tags: ['React Native', 'Expo', 'TypeScript', 'Firebase', 'OpenStreetMap'],
-        },
-        {
           id: 'trimed',
           name: 'Trimed',
           description: 'Problem: community platforms needed moderation at scale and distinct experiences per user role; managing permissions by hand was unsustainable. Solution: a multi-tier ecosystem (mobile + web + admin) with real-time moderation, credit management and role-based access control. My role: I architected the cross-platform strategy (React Native for users, Next.js for admins), implemented role-based authorisation, and designed the serverless backend with Firebase Cloud Functions. Results: MVP shipped in weeks, with moderation response time cut against the manual flow. Stack: React Native, Expo, Next.js, Firebase (Firestore, Cloud Functions), TypeScript.',
@@ -531,20 +517,6 @@ export const translations = {
           tags: ['NestJS', 'Next.js', 'PostgreSQL'],
           user: 'admin@microcapital.ao',
           password: 'admin123',
-        },
-        {
-          id: 'infrawatch',
-          name: 'InfraWatch',
-          description: 'Problema: equipas que operam infraestrutura precisam de saber que algo falhou antes do cliente ligar, e de distinguir quem pode ver de quem pode agir. Solução: uma plataforma de monitorização em tempo real, com dashboards, filas de processamento de métricas, alertas e controlo de acesso por funções. O meu papel: backend em Node.js/TypeScript com Redis para filas e estado efémero, frontend React para os dashboards, e empacotamento em Docker para arranque reproduzível. Resultados: projeto próprio, em desenvolvimento aberto no GitHub. Stack: Node.js, TypeScript, React, Redis, Docker.',
-          repo: 'https://github.com/CarmoDaGama/InfraWatch',
-          tags: ['Node.js', 'TypeScript', 'React', 'Redis', 'Docker'],
-        },
-        {
-          id: 'myhealth',
-          name: 'Localizador de Serviços de Saúde',
-          description: 'Problema: encontrar o hospital, clínica, farmácia, unidade de urgência ou laboratório mais próximo obriga a saber o que existe antes de precisar — e numa emergência ninguém tem tempo para procurar. Solução: uma aplicação móvel multiplataforma que coloca os serviços de saúde próximos num mapa interativo, com localização por GPS, pesquisa por nome ou tipo, detalhes do serviço, direções e chamada direta, além de avaliações, comentários e favoritos. Os profissionais de saúde podem registar um serviço, que um administrador revê e aprova antes de ficar visível. O meu papel: construí a aplicação de ponta a ponta em React Native/Expo com TypeScript — Firebase (Authentication, Firestore, Storage) como backend, OpenStreetMap com Leaflet na camada de mapa, localização PT/EN com deteção automática do idioma do dispositivo, e painel de administração para aprovações, funções e registo de ações. Resultados: projeto próprio, em desenvolvimento aberto no GitHub, a correr dentro dos limites do plano gratuito do Firebase. Stack: React Native, Expo, TypeScript, Firebase, OpenStreetMap/Leaflet.',
-          repo: 'https://github.com/CarmoDaGama/my-health-app',
-          tags: ['React Native', 'Expo', 'TypeScript', 'Firebase', 'OpenStreetMap'],
         },
         {
           id: 'trimed',

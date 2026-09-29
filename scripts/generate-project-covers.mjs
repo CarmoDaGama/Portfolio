@@ -29,19 +29,14 @@ const FONT = 'Segoe UI, Helvetica Neue, Arial, sans-serif';
 /** Projects rendered as generated artwork, with the line printed under the name. */
 const COVERS = {
   kandonga: { pt: 'Backend fintech · inclusão de crédito', en: 'Fintech backend · credit inclusion' },
-  infrawatch: { pt: 'Monitorização em tempo real', en: 'Real-time infrastructure monitoring' },
-  myhealth: { pt: 'Serviços de saúde no mapa', en: 'Health services on the map' },
-  smcuango: { pt: 'Site institucional · mineração', en: 'Institutional site · mining' },
-  smchitotolo: { pt: 'Site institucional · mineração', en: 'Institutional site · mining' },
   projectolola: { pt: 'Site institucional', en: 'Institutional site' },
-  bec: { pt: 'Site institucional', en: 'Institutional site' },
 };
 
 const OPEN_SOURCE = { pt: 'CÓDIGO ABERTO', en: 'OPEN SOURCE' };
 const CLIENT_WORK = { pt: 'TRABALHO DE CLIENTE', en: 'CLIENT WORK' };
 
 /** Projects whose artwork is labelled as client work rather than open source. */
-const CLIENT_PROJECTS = new Set(['smcuango', 'smchitotolo', 'projectolola', 'bec']);
+const CLIENT_PROJECTS = new Set(['projectolola']);
 
 const escapeXml = (value) =>
   String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

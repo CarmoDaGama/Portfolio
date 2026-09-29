@@ -27,13 +27,11 @@ const projectSources = {
   trimed: 'src/assets/project-trimed.webp',
   zenix: 'src/assets/project-zenix.webp',
   anyconnect: 'src/assets/project-anyconnect.png',
+  smcuango: 'src/assets/project-smcuango.webp',
+  smchitotolo: 'src/assets/project-smchitotolo.webp',
+  bec: 'src/assets/project-bec.webp',
   kandonga: 'src/assets/project-kandonga.en.png',
-  infrawatch: 'src/assets/project-infrawatch.en.png',
-  myhealth: 'src/assets/project-myhealth.en.png',
-  smcuango: 'src/assets/project-smcuango.en.png',
-  smchitotolo: 'src/assets/project-smchitotolo.en.png',
   projectolola: 'src/assets/project-projectolola.en.png',
-  bec: 'src/assets/project-bec.en.png',
 };
 
 const escapeXml = (value) =>

@@ -7,26 +7,22 @@ import tmicroPreview from '../assets/project-tmicro.webp';
 import trimedPreview from '../assets/project-trimed.webp';
 import zenixPreview from '../assets/project-zenix.webp';
 import anyconnectPreview from '../assets/project-anyconnect.png';
+import smcuangoPreview from '../assets/project-smcuango.webp';
+import smchitotoloPreview from '../assets/project-smchitotolo.webp';
+import becPreview from '../assets/project-bec.webp';
 import kandongaPreview from '../assets/project-kandonga.png';
 import kandongaPreviewEn from '../assets/project-kandonga.en.png';
-import infrawatchPreview from '../assets/project-infrawatch.png';
-import infrawatchPreviewEn from '../assets/project-infrawatch.en.png';
-import myhealthPreview from '../assets/project-myhealth.png';
-import myhealthPreviewEn from '../assets/project-myhealth.en.png';
-import smcuangoPreview from '../assets/project-smcuango.png';
-import smcuangoPreviewEn from '../assets/project-smcuango.en.png';
-import smchitotoloPreview from '../assets/project-smchitotolo.png';
-import smchitotoloPreviewEn from '../assets/project-smchitotolo.en.png';
 import projectololaPreview from '../assets/project-projectolola.png';
 import projectololaPreviewEn from '../assets/project-projectolola.en.png';
-import becPreview from '../assets/project-bec.png';
-import becPreviewEn from '../assets/project-bec.en.png';
 
 const projectPreviews = {
   tmicro: tmicroPreview,
   trimed: trimedPreview,
   zenix: zenixPreview,
   anyconnect: anyconnectPreview,
+  smcuango: smcuangoPreview,
+  smchitotolo: smchitotoloPreview,
+  bec: becPreview,
 };
 
 // Projects with no product screenshot use generated artwork (see
@@ -35,12 +31,7 @@ const projectPreviews = {
 // it gets letterboxed against its own background instead of being covered.
 const generatedCovers = {
   kandonga: { pt: kandongaPreview, en: kandongaPreviewEn },
-  infrawatch: { pt: infrawatchPreview, en: infrawatchPreviewEn },
-  myhealth: { pt: myhealthPreview, en: myhealthPreviewEn },
-  smcuango: { pt: smcuangoPreview, en: smcuangoPreviewEn },
-  smchitotolo: { pt: smchitotoloPreview, en: smchitotoloPreviewEn },
   projectolola: { pt: projectololaPreview, en: projectololaPreviewEn },
-  bec: { pt: becPreview, en: becPreviewEn },
 };
 
 const previewSrc = (project, language) =>
