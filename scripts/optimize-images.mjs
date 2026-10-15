@@ -23,11 +23,6 @@ const imageJobs = [
     output: resolve(projectRoot, 'src/assets/project-trimed.webp'),
     options: { quality: 80 },
   },
-  {
-    input: resolve(projectRoot, 'src/assets/project-zenix.svg'),
-    output: resolve(projectRoot, 'src/assets/project-zenix.webp'),
-    options: { quality: 80 },
-  },
 ];
 
 async function optimizeImages() {

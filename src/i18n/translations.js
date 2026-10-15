@@ -213,7 +213,7 @@ export const translations = {
           id: 'zenix',
           name: 'Vendas Zenix',
           description: 'Problem: fragmented accounting and invoicing systems created data silos, manual reconciliation errors and tax-compliance risk. Solution: a unified, API-first platform integrating entities, products, taxes, invoicing and financial reconciliation, with automatic compliance (SAF-T export, multi-tenant support). My role: I architected the domain-driven NestJS backend, designed RBAC access control, optimised queries with Redis caching for a high-transaction environment, and led the DevOps setup (Docker, CI/CD). Results: in enterprise use, with end-to-end auditable invoicing and reconciliation. Stack: NestJS, TypeScript, PostgreSQL, Redis, Docker, CI/CD (Azure DevOps).',
-          url: 'https://express.zenix.ao/',
+          url: 'https://zenix.ao/',
           tags: ['NestJS', 'PostgreSQL', 'DevOps'],
         },
         {
@@ -495,7 +495,7 @@ export const translations = {
           id: 'zenix',
           name: 'Zenix',
           description: 'Problema: sistemas de contabilidade e faturação fragmentados criavam silos de dados, erros de reconciliação manual e risco de incumprimento fiscal. Solução: uma plataforma unificada, API-first, que integra entidades, produtos, impostos, faturação e reconciliação financeira, com conformidade automática (exportação SAF-T, suporte multi-tenant). O meu papel: arquitetei o backend em NestJS orientado ao domínio, desenhei o controlo de acesso RBAC, otimizei consultas com cache em Redis para ambiente de alta transação e liderei o setup de DevOps (Docker, CI/CD). Resultados: em uso empresarial, com emissão e reconciliação de faturas auditáveis de ponta a ponta. Stack: NestJS, TypeScript, PostgreSQL, Redis, Docker, CI/CD (Azure DevOps).',
-          url: 'https://express.zenix.ao/',
+          url: 'https://zenix.ao/',
           tags: ['NestJS', 'PostgreSQL', 'DevOps'],
         },
         {
